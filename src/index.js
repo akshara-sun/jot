@@ -1,7 +1,7 @@
 import { StrictMode } from "react";
 import ReactDOM from "react-dom";
 
-import HomePage from "./HomePage";
+import HomePage from "./home";
 
 const rootElement = document.getElementById("root");
 ReactDOM.render(
