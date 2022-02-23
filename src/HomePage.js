@@ -1,9 +1,9 @@
 import Thumbnails from "./components/thumbnails";
 import "./styles.css";
 
-export default function App() {
+export default function HomePage() {
   return (
-    <div className="App">
+    <div className="HomePage">
       <h1 className="welcome-message">
         Welcome to Jot.
         <img
@@ -14,7 +14,6 @@ export default function App() {
       </h1>
       <h3>Pick your canvas</h3>
       <div className="canvas-options">
-        {/* Placeholders for canvas options thumbnails */}
         <Thumbnails />
       </div>
     </div>
