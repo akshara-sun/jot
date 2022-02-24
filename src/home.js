@@ -1,11 +1,11 @@
-//import Thumbnails from "./components/thumbnails";
-import PostIts from "./components/post-its";
 import "./styles.css";
+import Thumbnails from "./components/thumbnails";
+import StickiesCanvas from "./stickies-canvas";
 
 export default function HomePage() {
   return (
     <div className="HomePage">
-      {/* <h1 className="welcome-message">
+      <h1 className="welcome-message">
         Welcome to Jot.
         <img
           alt="Pen drawing "
@@ -13,9 +13,11 @@ export default function HomePage() {
           href="https://icons8.com/icon/fx5qUnmt4dAr/autograph"
         />
       </h1>
-      <h3>Pick your canvas</h3> */}
-      <div className="canvas-options">{/* <Thumbnails /> */}</div>
-      <PostIts />
+      <h3>Pick your canvas</h3>
+      <div className="canvas-options">
+        <Thumbnails />
+      </div>
+      <StickiesCanvas />
     </div>
   );
 }

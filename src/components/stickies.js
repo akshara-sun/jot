@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Draggable from "react-draggable";
 
-export default function PostIts() {
+export default function Sticky() {
   const [text, handleTextChange] = useState("");
   const nodeRef = React.useRef(null);
 
@@ -18,7 +18,7 @@ export default function PostIts() {
     <>
       <Draggable nodeRef={nodeRef}>
         <div ref={nodeRef}>
-          <ul className="post-its">
+          <ul className="sticky">
             <li>
               <div className="button-container">
                 <button id="close-button">x</button>

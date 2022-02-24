@@ -3,7 +3,7 @@ import React from "react";
 export default function Thumbnails() {
   return (
     <div className="thumbnail-container">
-      <ul className="post-its-tnail">
+      <ul className="sticky-tnail">
         <li>
           <p>Post-Its</p>
         </li>
