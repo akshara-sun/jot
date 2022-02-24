@@ -3,7 +3,19 @@ import Draggable from "react-draggable";
 
 export default function Sticky() {
   const [text, handleTextChange] = useState("");
+  const [isVisible, setVisibility] = useState("block");
   const nodeRef = React.useRef(null);
+
+  const toggleVisibility = () => {
+    if (
+      window.confirm(
+        "Are you sure you want to delete this note? This action cannot be undone."
+      )
+    ) {
+      setVisibility("none");
+      localStorage.removeItem("inputValue");
+    }
+  };
 
   const handleChange = (e) => {
     handleTextChange(e.target.value);
@@ -19,9 +31,11 @@ export default function Sticky() {
       <Draggable nodeRef={nodeRef}>
         <div ref={nodeRef}>
           <ul className="sticky">
-            <li>
+            <li style={{ display: isVisible }}>
               <div className="button-container">
-                <button id="close-button">x</button>
+                <button onClick={() => toggleVisibility()} id="close-button">
+                  x
+                </button>
               </div>
               <p>
                 <input

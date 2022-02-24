@@ -1,6 +1,5 @@
 import "./styles.css";
 import Thumbnails from "./components/thumbnails";
-import StickiesCanvas from "./stickies-canvas";
 
 export default function HomePage() {
   return (
@@ -17,7 +16,6 @@ export default function HomePage() {
       <div className="canvas-options">
         <Thumbnails />
       </div>
-      <StickiesCanvas />
     </div>
   );
 }
