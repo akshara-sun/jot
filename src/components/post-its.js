@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
+import Draggable from "react-draggable";
 
 export default function PostIts() {
   const [text, handleTextChange] = useState("");
+  const nodeRef = React.useRef(null);
 
   const handleChange = (e) => {
     handleTextChange(e.target.value);
@@ -13,23 +15,29 @@ export default function PostIts() {
   }, []);
 
   return (
-    <ul className="post-its">
-      <li>
-        <div className="button-container">
-          <button id="close-button">x</button>
+    <>
+      <Draggable nodeRef={nodeRef}>
+        <div ref={nodeRef}>
+          <ul className="post-its">
+            <li>
+              <div className="button-container">
+                <button id="close-button">x</button>
+              </div>
+              <p>
+                <input
+                  id="sticky-text"
+                  placeholder="Enter text here..."
+                  cols="25"
+                  rows="10"
+                  value={text}
+                  style={{ fontFamily: "Gloria Hallelujah, cursive" }}
+                  onChange={handleChange}
+                />
+              </p>
+            </li>
+          </ul>
         </div>
-        <p>
-          <input
-            id="sticky-text"
-            placeholder="Enter text here..."
-            cols="25"
-            rows="10"
-            value={text}
-            style={{ fontFamily: "Gloria Hallelujah, cursive" }}
-            onChange={handleChange}
-          />
-        </p>
-      </li>
-    </ul>
+      </Draggable>
+    </>
   );
 }
