@@ -2,10 +2,16 @@
   text-align: center;
   font-family: "Gloria Hallelujah", cursive;
 }
+
+.StickyCanvas {
+  text-align: center;
+  font-family: "Gloria Hallelujah", cursive;
+}
 .welcome-message {
   margin-top: 200px;
 }
 
+/*Thumbnail Styles*/
 .thumbnail-container {
   display: flex;
   flex-direction: row;
@@ -26,6 +32,41 @@
   list-style-type: none;
 }
 
+.notepad-tnail li {
+  width: 150px;
+  min-height: 100px;
+  background: repeating-linear-gradient(
+    white,
+    white 24px,
+    #9198e5 25px,
+    #9198e5 26px
+  );
+  padding: 60px 15px 15px 15px;
+  -webkit-box-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
+  box-shadow: 2px 10px 10px rgb(94, 93, 93);
+  transform: rotate(-0.5deg);
+  -moz-transform: rotate(-0.5deg);
+  -o-transform: rotate(-0.5deg);
+  list-style-type: none;
+}
+
+.blank-canvas-tnail li {
+  width: 150px;
+  min-height: 100px;
+  border: solid 1px rgb(204, 199, 199);
+  padding: 60px 15px 15px 15px;
+  -webkit-box-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
+  box-shadow: 2px 10px 10px rgb(94, 93, 93);
+  transform: rotate(-0.5deg);
+  -moz-transform: rotate(-0.5deg);
+  -o-transform: rotate(-0.5deg);
+  list-style-type: none;
+}
+
+/* COMPONENT STYLES */
+/* STICKY */
 .button-container {
   display: flex;
   flex-direction: row;
@@ -79,37 +120,4 @@ input:focus::placeholder {
 
 #sticky-text:focus {
   outline: none;
-}
-
-.notepad-tnail li {
-  width: 150px;
-  min-height: 100px;
-  background: repeating-linear-gradient(
-    white,
-    white 24px,
-    #9198e5 25px,
-    #9198e5 26px
-  );
-  padding: 60px 15px 15px 15px;
-  -webkit-box-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
-  box-shadow: 2px 10px 10px rgb(94, 93, 93);
-  transform: rotate(-0.5deg);
-  -moz-transform: rotate(-0.5deg);
-  -o-transform: rotate(-0.5deg);
-  list-style-type: none;
-}
-
-.blank-canvas-tnail li {
-  width: 150px;
-  min-height: 100px;
-  border: solid 1px rgb(204, 199, 199);
-  padding: 60px 15px 15px 15px;
-  -webkit-box-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
-  box-shadow: 2px 10px 10px rgb(94, 93, 93);
-  transform: rotate(-0.5deg);
-  -moz-transform: rotate(-0.5deg);
-  -o-transform: rotate(-0.5deg);
-  list-style-type: none;
 }
