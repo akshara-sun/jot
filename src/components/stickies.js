@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Draggable from "react-draggable";
 
-export default function Sticky() {
+export default function Sticky(props) {
   const [text, handleTextChange] = useState("");
   const [isVisible, setVisibility] = useState("flex");
   const nodeRef = React.useRef(null);
@@ -37,14 +37,14 @@ export default function Sticky() {
                   x
                 </button>
               </div>
-              <p>
-                <input
+              <p className="sticky-note">
+                <textarea
                   id="sticky-text"
                   placeholder="Enter text here..."
                   defaultValue={text}
                   style={{ fontFamily: "Gloria Hallelujah, cursive" }}
                   onChange={handleChange}
-                />
+                ></textarea>
               </p>
             </li>
           </ul>

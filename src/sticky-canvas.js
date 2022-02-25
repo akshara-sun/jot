@@ -4,24 +4,21 @@ import Sticky from "./components/stickies";
 
 export default function StickyCanvas() {
   const [components, setComponents] = useState([]);
-  const [bgColor, setBgColor] = useState("#F1F172");
 
   const addNewNote = () => {
     setComponents([...components, "Clear Canvas"]);
-    let randomColor = Math.floor(Math.random() * 16777215).toString(16);
-    setBgColor("#" + randomColor);
   };
+
   return (
     <div className="StickyCanvas">
       <h2>Stickies Canvas</h2>
       <h3>Stick to it.</h3>
-      <AddButton onClick={addNewNote} />
+      <AddButton onClick={() => addNewNote()} />
       {components.map((item, i) => (
         <Sticky
           style={{
             display: "flex",
-            flexDirection: "row",
-            backgroundColor: bgColor
+            flexDirection: "row"
           }}
           key={i}
         />
@@ -29,3 +26,20 @@ export default function StickyCanvas() {
     </div>
   );
 }
+
+/*
+Function that generates random backgroud color
+const [bgColor, setBgColor] = useState(["#F1F172"]);
+
+  const generateRandomColor = () => {
+    var letters = "0123456789ABCDEF";
+    var color = "#";
+    for (var i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    setBgColor([...bgColor, color]);
+    console.log(bgColor);
+  };
+
+
+*/
