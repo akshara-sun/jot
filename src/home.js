@@ -1,5 +1,5 @@
-import Thumbnails from "./components/thumbnails";
 import "./styles.css";
+import Thumbnails from "./components/thumbnails";
 
 export default function HomePage() {
   return (
