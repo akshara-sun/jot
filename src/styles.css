@@ -1,3 +1,11 @@
+a {
+  color: brown;
+}
+
+a:visited {
+  color: brown;
+}
+
 .HomePage {
   text-align: center;
   font-family: "Gloria Hallelujah", cursive;
