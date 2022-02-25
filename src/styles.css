@@ -111,7 +111,9 @@
   border: none;
   resize: none;
   overscroll-behavior-x: contain;
+  inline-size: min-content;
   margin: 15px;
+  border: red solid 1px;
 }
 
 input:focus::placeholder {

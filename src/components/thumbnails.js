@@ -7,7 +7,7 @@ export default function Thumbnails() {
       <ul className="sticky-tnail">
         <li>
           <p>
-            <Link to="/stickies">Stickies</Link>
+            <Link to="/sticky-canvas">Stickies</Link>
           </p>
         </li>
       </ul>
