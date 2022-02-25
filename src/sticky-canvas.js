@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import AddButton from "./components/addNewButton";
+import MenuNav from "./components/menuNav";
 import Sticky from "./components/stickies";
 
 export default function StickyCanvas() {
@@ -11,8 +12,8 @@ export default function StickyCanvas() {
 
   return (
     <div className="StickyCanvas">
+      <MenuNav />
       <h2>Stickies Canvas</h2>
-      <h3>Stick to it.</h3>
       <AddButton onClick={() => addNewNote()} />
       {components.map((item, i) => (
         <Sticky
