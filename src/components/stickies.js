@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from "react";
-import Draggable from "react-draggable";
 
-export default function Sticky(props) {
+export default function Sticky() {
   const [text, handleTextChange] = useState("");
   const [isVisible, setVisibility] = useState("flex");
-  const nodeRef = React.useRef(null);
 
   const toggleVisibility = () => {
     if (
@@ -28,28 +26,24 @@ export default function Sticky(props) {
 
   return (
     <>
-      <Draggable nodeRef={nodeRef}>
-        <div ref={nodeRef}>
-          <ul style={{ display: isVisible }} className="sticky">
-            <li>
-              <div className="button-container">
-                <button onClick={() => toggleVisibility()} id="close-button">
-                  x
-                </button>
-              </div>
-              <p className="sticky-note">
-                <textarea
-                  id="sticky-text"
-                  placeholder="Enter text here..."
-                  defaultValue={text}
-                  style={{ fontFamily: "Gloria Hallelujah, cursive" }}
-                  onChange={handleChange}
-                ></textarea>
-              </p>
-            </li>
-          </ul>
-        </div>
-      </Draggable>
+      <ul style={{ display: isVisible }} className="sticky">
+        <li>
+          <div className="button-container">
+            <button onClick={() => toggleVisibility()} id="close-button">
+              x
+            </button>
+          </div>
+          <p className="sticky-note">
+            <textarea
+              id="sticky-text"
+              placeholder="Enter text here..."
+              defaultValue={text}
+              style={{ fontFamily: "Gloria Hallelujah, cursive" }}
+              onChange={handleChange}
+            ></textarea>
+          </p>
+        </li>
+      </ul>
     </>
   );
 }

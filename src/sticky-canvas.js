@@ -1,10 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import AddButton from "./components/addNewButton";
 import MenuNav from "./components/menuNav";
 import Sticky from "./components/stickies";
+import Draggable from "react-draggable";
 
 export default function StickyCanvas() {
   const [components, setComponents] = useState([]);
+
+  const nodeRef = useRef(null);
 
   const addNewNote = () => {
     setComponents([...components, "Clear Canvas"]);
@@ -15,15 +18,15 @@ export default function StickyCanvas() {
       <MenuNav />
       <h2>Stickies Canvas</h2>
       <AddButton onClick={() => addNewNote()} />
-      {components.map((item, i) => (
-        <Sticky
-          style={{
-            display: "flex",
-            flexDirection: "row"
-          }}
-          key={i}
-        />
-      ))}
+      {components.map((item, i) => {
+        return (
+          <Draggable key={item} nodeRef={nodeRef}>
+            <div ref={nodeRef}>
+              <Sticky key={i} />
+            </div>
+          </Draggable>
+        );
+      })}
     </div>
   );
 }
