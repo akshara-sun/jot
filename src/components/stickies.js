@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Draggable from "react-draggable";
 
 export default function Sticky() {
@@ -13,18 +13,18 @@ export default function Sticky() {
       )
     ) {
       setVisibility("none");
-      // localStorage.removeItem("inputValue");
+      localStorage.removeItem("inputValue");
     }
   };
 
   const handleChange = (e) => {
     handleTextChange(e.target.value);
-    // localStorage.setItem("inputValue", e.target.value);
+    localStorage.setItem("inputValue", e.target.value);
   };
 
-  // useEffect(() => {
-  //   handleTextChange(localStorage.getItem("inputValue"));
-  // }, []);
+  useEffect(() => {
+    handleTextChange(localStorage.getItem("inputValue"));
+  }, []);
 
   return (
     <>
