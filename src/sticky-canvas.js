@@ -6,7 +6,7 @@ import Draggable from "react-draggable";
 
 export default function StickyCanvas() {
   const [components, setComponents] = useState([]);
-
+  const [initialPosition, setCurrentPosition] = useState({ x: 0, y: 0 });
   const nodeRef = useRef(null);
 
   const addNewNote = () => {
@@ -20,7 +20,11 @@ export default function StickyCanvas() {
       <AddButton onClick={() => addNewNote()} />
       {components.map((item, i) => {
         return (
-          <Draggable key={item} nodeRef={nodeRef}>
+          <Draggable
+            key={item}
+            defaultPosition={initialPosition}
+            nodeRef={nodeRef}
+          >
             <div ref={nodeRef}>
               <Sticky key={i} />
             </div>
