@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import Button from "./components/button";
 import MenuNav from "./components/menuNav";
 import Sticky from "./components/stickies";
@@ -7,34 +7,22 @@ import Draggable from "react-draggable";
 export default function StickyCanvas() {
   const [components, setComponents] = useState([<Sticky />]);
   const [currentPosition, updatePosition] = useState({ x: 0, y: 0 });
-  const [isVisible, setVisibility] = useState("flex");
 
   const nodeRef = useRef(null);
 
   const addNewNote = (e) => {
     setComponents([...components, <Sticky />]);
+    updatePosition({ x: 0, y: 0 });
     localStorage.setItem("newSticky", <Sticky />);
-    console.log(components);
   };
 
   const trackPosition = (data) => {
     updatePosition({ x: data.x, y: data.y });
-    localStorage.setItem("stickyXPos", data.x);
-    localStorage.setItem("stickyYPos", data.y);
   };
 
-  const toggleVisibility = () => {
-    if (
-      window.confirm(
-        "Are you sure you want to delete this note? This action cannot be undone."
-      )
-    ) {
-      setVisibility("none");
-      localStorage.removeItem("inputValue");
-      localStorage.removeItem("newSticky");
-      localStorage.removeItem("stickyXPos");
-      localStorage.removeItem("stickyYPos");
-    }
+  const savePositions = (data) => {
+    localStorage.setItem("stickyXPos", data.x);
+    localStorage.setItem("stickyYPos", data.y);
   };
 
   const clearStickies = () => {
@@ -61,12 +49,10 @@ export default function StickyCanvas() {
             defaultPosition={currentPosition}
             nodeRef={nodeRef}
             onDrag={(e, data) => trackPosition(data)}
+            onStop={(data) => savePositions(data)}
           >
             <div ref={nodeRef}>
-              <Sticky
-                onClick={() => toggleVisibility()}
-                style={{ display: isVisible }}
-              />
+              <Sticky />
             </div>
           </Draggable>
         );
