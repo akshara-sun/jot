@@ -1,29 +1,59 @@
-import React, { useState, useRef } from "react";
-import AddButton from "./components/addNewButton";
+import React, { useState, useRef, useEffect } from "react";
+import Button from "./components/button";
 import MenuNav from "./components/menuNav";
 import Sticky from "./components/stickies";
 import Draggable from "react-draggable";
 
 export default function StickyCanvas() {
-  const [components, setComponents] = useState([]);
+  const [components, setComponents] = useState([<Sticky />]);
   const [currentPosition, updatePosition] = useState({ x: 0, y: 0 });
+  const [isVisible, setVisibility] = useState("flex");
+
   const nodeRef = useRef(null);
 
-  const addNewNote = () => {
+  const addNewNote = (e) => {
     setComponents([...components, <Sticky />]);
+    localStorage.setItem("newSticky", <Sticky />);
+    console.log(components);
   };
+
   const trackPosition = (data) => {
-    let pos = { x: data.x, y: data.y };
-    updatePosition(pos);
-    console.log(data.x, data.y);
-    //localStorage.setItem("stickyPosition", pos);
+    updatePosition({ x: data.x, y: data.y });
+    localStorage.setItem("stickyXPos", data.x);
+    localStorage.setItem("stickyYPos", data.y);
+  };
+
+  const toggleVisibility = () => {
+    if (
+      window.confirm(
+        "Are you sure you want to delete this note? This action cannot be undone."
+      )
+    ) {
+      setVisibility("none");
+      localStorage.removeItem("inputValue");
+      localStorage.removeItem("newSticky");
+      localStorage.removeItem("stickyXPos");
+      localStorage.removeItem("stickyYPos");
+    }
+  };
+
+  const clearStickies = () => {
+    if (
+      window.confirm(
+        "Are you sure you want to clear this canvas? This action cannot be undone."
+      )
+    ) {
+      setComponents([]);
+      localStorage.clear();
+    }
   };
 
   return (
     <div className="StickyCanvas">
       <MenuNav />
       <h2>Stickies Canvas</h2>
-      <AddButton onClick={() => addNewNote()} />
+      <Button onClick={() => addNewNote()} text="New Note" />{" "}
+      <Button onClick={() => clearStickies()} text="Clear Canvas" />
       {components.map((item, idx) => {
         return (
           <Draggable
@@ -33,7 +63,10 @@ export default function StickyCanvas() {
             onDrag={(e, data) => trackPosition(data)}
           >
             <div ref={nodeRef}>
-              <Sticky />
+              <Sticky
+                onClick={() => toggleVisibility()}
+                style={{ display: isVisible }}
+              />
             </div>
           </Draggable>
         );
