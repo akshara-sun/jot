@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Button from "./components/button";
 import MenuNav from "./components/menuNav";
 import Sticky from "./components/stickies";
@@ -6,23 +6,25 @@ import Draggable from "react-draggable";
 
 export default function StickyCanvas() {
   const [components, setComponents] = useState([<Sticky />]);
-  const [currentPosition, updatePosition] = useState({ x: 0, y: 0 });
+  const [loaded, setLoaded] = useState(false);
+  const [currentPositions, updatePosition] = useState({ x: 0, y: 0 });
 
   const nodeRef = useRef(null);
 
+  useEffect(() => {
+    const initialPositions = JSON.parse(localStorage.getItem("positions"));
+    updatePosition(initialPositions);
+    setLoaded(true);
+  }, []);
+
   const addNewNote = (e) => {
     setComponents([...components, <Sticky />]);
-    updatePosition({ x: 0, y: 0 });
+
     localStorage.setItem("newSticky", <Sticky />);
   };
 
   const trackPosition = (data) => {
     updatePosition({ x: data.x, y: data.y });
-  };
-
-  const savePositions = (data) => {
-    localStorage.setItem("stickyXPos", data.x);
-    localStorage.setItem("stickyYPos", data.y);
   };
 
   const clearStickies = () => {
@@ -36,7 +38,11 @@ export default function StickyCanvas() {
     }
   };
 
-  return (
+  useEffect(() => {
+    localStorage.setItem(`positions`, JSON.stringify(currentPositions));
+  }, [currentPositions]);
+
+  return loaded ? (
     <div className="StickyCanvas">
       <MenuNav />
       <h2>Stickies Canvas</h2>
@@ -45,11 +51,11 @@ export default function StickyCanvas() {
       {components.map((item, idx) => {
         return (
           <Draggable
+            id="stickies"
             key={idx}
-            defaultPosition={currentPosition}
+            defaultPosition={currentPositions}
             nodeRef={nodeRef}
-            onDrag={(e, data) => trackPosition(data)}
-            onStop={(data) => savePositions(data)}
+            onStop={(e, data) => trackPosition(data)}
           >
             <div ref={nodeRef}>
               <Sticky />
@@ -58,7 +64,7 @@ export default function StickyCanvas() {
         );
       })}
     </div>
-  );
+  ) : null;
 }
 
 /*
