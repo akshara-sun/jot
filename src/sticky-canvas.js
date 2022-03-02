@@ -6,11 +6,17 @@ import Draggable from "react-draggable";
 
 export default function StickyCanvas() {
   const [components, setComponents] = useState([]);
-  const [initialPosition, setCurrentPosition] = useState({ x: 0, y: 0 });
+  const [currentPosition, updatePosition] = useState({ x: 0, y: 0 });
   const nodeRef = useRef(null);
 
   const addNewNote = () => {
-    setComponents([...components, "Clear Canvas"]);
+    setComponents([...components, <Sticky />]);
+  };
+  const trackPosition = (data) => {
+    let pos = { x: data.x, y: data.y };
+    updatePosition(pos);
+    console.log(data.x, data.y);
+    //localStorage.setItem("stickyPosition", pos);
   };
 
   return (
@@ -18,15 +24,16 @@ export default function StickyCanvas() {
       <MenuNav />
       <h2>Stickies Canvas</h2>
       <AddButton onClick={() => addNewNote()} />
-      {components.map((item, i) => {
+      {components.map((item, idx) => {
         return (
           <Draggable
-            key={item}
-            defaultPosition={initialPosition}
+            key={idx}
+            defaultPosition={currentPosition}
             nodeRef={nodeRef}
+            onDrag={(e, data) => trackPosition(data)}
           >
             <div ref={nodeRef}>
-              <Sticky key={i} />
+              <Sticky />
             </div>
           </Draggable>
         );

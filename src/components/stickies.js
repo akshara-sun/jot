@@ -25,7 +25,7 @@ export default function Sticky() {
   }, []);
 
   return (
-    <>
+    <div>
       <ul style={{ display: isVisible }} className="sticky">
         <li>
           <div className="button-container">
@@ -33,7 +33,7 @@ export default function Sticky() {
               x
             </button>
           </div>
-          <p className="sticky-note">
+          <label className="sticky-note">
             <textarea
               id="sticky-text"
               placeholder="Enter text here..."
@@ -41,9 +41,9 @@ export default function Sticky() {
               style={{ fontFamily: "Gloria Hallelujah, cursive" }}
               onChange={handleChange}
             ></textarea>
-          </p>
+          </label>
         </li>
       </ul>
-    </>
+    </div>
   );
 }
