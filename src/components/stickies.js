@@ -1,18 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
+import Draggable from "react-draggable";
 
-export default function Sticky() {
+export default function Sticky(props) {
   const [text, handleTextChange] = useState("");
-  const [isVisible, setVisibility] = useState("flex");
+  const [currentPositions, updatePosition] = useState({ x: 0, y: 0 });
+  const [loaded, setLoaded] = useState(false);
+  const nodeRef = useRef(null);
 
-  const toggleVisibility = () => {
-    if (
-      window.confirm(
-        "Are you sure you want to delete this note? This action cannot be undone."
-      )
-    ) {
-      setVisibility("none");
-      localStorage.removeItem("inputValue");
-    }
+  const savePosition = (data) => {
+    updatePosition({ x: data.x, y: data.y });
   };
 
   const handleChange = (e) => {
@@ -20,26 +16,43 @@ export default function Sticky() {
     localStorage.setItem("inputValue", e.target.value);
   };
 
-  return (
-    <div>
-      <ul style={{ display: isVisible }} className="sticky">
-        <li>
-          <div className="button-container">
-            <button onClick={() => toggleVisibility()} id="close-button">
-              x
-            </button>
-          </div>
-          <label className="sticky-note">
-            <textarea
-              id="sticky-text"
-              placeholder="Enter text here..."
-              defaultValue={text}
-              style={{ fontFamily: "Gloria Hallelujah, cursive" }}
-              onChange={handleChange}
-            ></textarea>
-          </label>
-        </li>
-      </ul>
-    </div>
-  );
+  useEffect(() => {
+    const initialPositions = JSON.parse(localStorage.getItem("positions"));
+    updatePosition(initialPositions);
+    setLoaded(true);
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem(`positions`, JSON.stringify(currentPositions));
+  }, [currentPositions]);
+
+  return loaded ? (
+    <Draggable
+      id="stickies"
+      defaultPosition={currentPositions}
+      nodeRef={nodeRef}
+      onStop={(e, data) => savePosition(data)}
+    >
+      <div ref={nodeRef}>
+        <ul className="sticky">
+          <li style={props.style}>
+            <div className="button-container">
+              <button onClick={props.onClick} id="close-button">
+                x
+              </button>
+            </div>
+            <label className="sticky-note">
+              <textarea
+                id="sticky-text"
+                placeholder="Enter text here..."
+                defaultValue={text}
+                style={props.style}
+                onChange={handleChange}
+              ></textarea>
+            </label>
+          </li>
+        </ul>
+      </div>
+    </Draggable>
+  ) : null;
 }

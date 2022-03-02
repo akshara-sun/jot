@@ -103,7 +103,6 @@ a:visited {
   width: 250px;
   height: 220px;
   min-height: 150px;
-  background-color: rgb(241, 241, 114);
   -webkit-box-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
   -moz-box-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
   box-shadow: 2px 10px 10px rgb(94, 93, 93);

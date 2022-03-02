@@ -1,30 +1,26 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState } from "react";
 import Button from "./components/button";
 import MenuNav from "./components/menuNav";
 import Sticky from "./components/stickies";
-import Draggable from "react-draggable";
 
 export default function StickyCanvas() {
   const [components, setComponents] = useState([<Sticky />]);
-  const [loaded, setLoaded] = useState(false);
-  const [currentPositions, updatePosition] = useState({ x: 0, y: 0 });
-
-  const nodeRef = useRef(null);
-
-  useEffect(() => {
-    const initialPositions = JSON.parse(localStorage.getItem("positions"));
-    updatePosition(initialPositions);
-    setLoaded(true);
-  }, []);
+  const [isVisible, setVisibility] = useState("flex");
 
   const addNewNote = (e) => {
     setComponents([...components, <Sticky />]);
-
     localStorage.setItem("newSticky", <Sticky />);
   };
 
-  const trackPosition = (data) => {
-    updatePosition({ x: data.x, y: data.y });
+  const toggleVisibility = () => {
+    if (
+      window.confirm(
+        "Are you sure you want to delete this note? This action cannot be undone."
+      )
+    ) {
+      setVisibility("none");
+      localStorage.removeItem("inputValue");
+    }
   };
 
   const clearStickies = () => {
@@ -38,11 +34,7 @@ export default function StickyCanvas() {
     }
   };
 
-  useEffect(() => {
-    localStorage.setItem(`positions`, JSON.stringify(currentPositions));
-  }, [currentPositions]);
-
-  return loaded ? (
+  return (
     <div className="StickyCanvas">
       <MenuNav />
       <h2>Stickies Canvas</h2>
@@ -50,21 +42,27 @@ export default function StickyCanvas() {
       <Button onClick={() => clearStickies()} text="Clear Canvas" />
       {components.map((item, idx) => {
         return (
-          <Draggable
-            id="stickies"
+          <div
+            style={{
+              display: isVisible,
+              flexDirection: "row",
+              justifyContent: "flex-start",
+              alignItems: "flex-end"
+            }}
             key={idx}
-            defaultPosition={currentPositions}
-            nodeRef={nodeRef}
-            onStop={(e, data) => trackPosition(data)}
           >
-            <div ref={nodeRef}>
-              <Sticky />
-            </div>
-          </Draggable>
+            <Sticky
+              style={{
+                backgroundColor: "#F1F172",
+                fontFamily: "Gloria Hallelujah, cursive"
+              }}
+              onClick={() => toggleVisibility()}
+            />
+          </div>
         );
       })}
     </div>
-  ) : null;
+  );
 }
 
 /*
