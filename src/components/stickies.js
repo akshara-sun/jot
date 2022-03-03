@@ -10,9 +10,10 @@ export default function Sticky(props) {
   const savePosition = (data) => {
     updatePosition({ x: data.x, y: data.y });
     localStorage.setItem(
-      "stickyPosition",
+      `stickyPosition`,
       JSON.stringify({ x: data.x, y: data.y })
     );
+    console.log(JSON.parse(localStorage.getItem(`stickyPosition`)));
   };
 
   const handleChange = (e) => {
@@ -25,6 +26,7 @@ export default function Sticky(props) {
       id="stickies"
       defaultPosition={currentPositions}
       nodeRef={nodeRef}
+      onDrag={(e, data) => updatePosition({ x: data.x, y: data.y })}
       onStop={(e, data) => savePosition(data)}
     >
       <div ref={nodeRef}>

@@ -1,17 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Button from "./components/button";
 import MenuNav from "./components/menuNav";
 import Sticky from "./components/stickies";
 
 export default function StickyCanvas() {
-  const [components, setComponents] = useState([<Sticky />]);
+  const [components, setComponents] = useState([]);
   const [isVisible, setVisibility] = useState("flex");
   const [positions, trackPositions] = useState([{ x: 0, y: 0 }]);
 
   const addNewNote = (e) => {
+    //updating components array with a new sticky every time button is clicked
     setComponents([...components, <Sticky />]);
-    let stickyPositionData = localStorage.getItem("stickyPosition");
+    //getting position of sticky on the page
+    let stickyPositionData = JSON.parse(localStorage.getItem("stickyPosition"));
+    //updating positions array with new sticky position
+    //problem - updating before drag - if the sticky is added, dragged, and then page refreshed, the positions array will not contain the dragged position of the sticky. It will only have the position it had once it was added to the canvas.
     trackPositions([...positions, stickyPositionData]);
+    //console.log(positions);
     localStorage.setItem("newSticky", <Sticky />);
   };
 
@@ -36,6 +41,12 @@ export default function StickyCanvas() {
       localStorage.clear();
     }
   };
+
+  useEffect(() => {
+    localStorage.setItem("positions_stickies", JSON.stringify(positions), [
+      positions
+    ]);
+  });
 
   return (
     <div className="StickyCanvas">
