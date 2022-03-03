@@ -6,9 +6,12 @@ import Sticky from "./components/stickies";
 export default function StickyCanvas() {
   const [components, setComponents] = useState([<Sticky />]);
   const [isVisible, setVisibility] = useState("flex");
+  const [positions, trackPositions] = useState([{ x: 0, y: 0 }]);
 
   const addNewNote = (e) => {
     setComponents([...components, <Sticky />]);
+    let stickyPositionData = localStorage.getItem("stickyPosition");
+    trackPositions([...positions, stickyPositionData]);
     localStorage.setItem("newSticky", <Sticky />);
   };
 

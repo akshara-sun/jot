@@ -1,14 +1,18 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import Draggable from "react-draggable";
 
 export default function Sticky(props) {
   const [text, handleTextChange] = useState("");
   const [currentPositions, updatePosition] = useState({ x: 0, y: 0 });
-  const [loaded, setLoaded] = useState(false);
+
   const nodeRef = useRef(null);
 
   const savePosition = (data) => {
     updatePosition({ x: data.x, y: data.y });
+    localStorage.setItem(
+      "stickyPosition",
+      JSON.stringify({ x: data.x, y: data.y })
+    );
   };
 
   const handleChange = (e) => {
@@ -16,17 +20,7 @@ export default function Sticky(props) {
     localStorage.setItem("inputValue", e.target.value);
   };
 
-  useEffect(() => {
-    const initialPositions = JSON.parse(localStorage.getItem("positions"));
-    updatePosition(initialPositions);
-    setLoaded(true);
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem(`positions`, JSON.stringify(currentPositions));
-  }, [currentPositions]);
-
-  return loaded ? (
+  return (
     <Draggable
       id="stickies"
       defaultPosition={currentPositions}
@@ -54,5 +48,5 @@ export default function Sticky(props) {
         </ul>
       </div>
     </Draggable>
-  ) : null;
+  );
 }
