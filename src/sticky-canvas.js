@@ -1,22 +1,32 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import Button from "./components/button";
 import MenuNav from "./components/menuNav";
 import Sticky from "./components/stickies";
+import Draggable from "react-draggable";
 
 export default function StickyCanvas() {
   const [components, setComponents] = useState([]);
   const [isVisible, setVisibility] = useState("flex");
-  const [positions, trackPositions] = useState([{ x: 0, y: 0 }]);
+  const [stickyPosition, setStickyPosition] = useState({ x: 0, y: 0 });
+  //const [positionsArray, trackPositions] = useState([]);
+
+  const nodeRef = useRef(null);
+
+  const isDragging = (data) => {
+    setStickyPosition({ x: data.x, y: data.y });
+  };
+
+  const savePosition = () => {
+    localStorage.setItem("stoppedAt", JSON.stringify(stickyPosition));
+    //logic to add:
+    //get last saved position from local storage and save it in positionsArr.
+    //if the same sticky is moved again, the value from the previous state will be overwritten
+    //if a new sticky is added and moved, the positionsArray will be updated
+  };
 
   const addNewNote = (e) => {
     //updating components array with a new sticky every time button is clicked
     setComponents([...components, <Sticky />]);
-    //getting position of sticky on the page
-    let stickyPositionData = JSON.parse(localStorage.getItem("stickyPosition"));
-    //updating positions array with new sticky position
-    //problem - updating before drag - if the sticky is added, dragged, and then page refreshed, the positions array will not contain the dragged position of the sticky. It will only have the position it had once it was added to the canvas.
-    trackPositions([...positions, stickyPositionData]);
-    //console.log(positions);
     localStorage.setItem("newSticky", <Sticky />);
   };
 
@@ -42,11 +52,11 @@ export default function StickyCanvas() {
     }
   };
 
-  useEffect(() => {
-    localStorage.setItem("positions_stickies", JSON.stringify(positions), [
-      positions
-    ]);
-  });
+  // useEffect(() => {
+  //   localStorage.setItem("positions_stickies", JSON.stringify(positions), [
+  //     positions
+  //   ]);
+  // });
 
   return (
     <div className="StickyCanvas">
@@ -56,23 +66,32 @@ export default function StickyCanvas() {
       <Button onClick={() => clearStickies()} text="Clear Canvas" />
       {components.map((item, idx) => {
         return (
-          <div
-            style={{
-              display: isVisible,
-              flexDirection: "row",
-              justifyContent: "flex-start",
-              alignItems: "flex-end"
-            }}
+          <Draggable
+            id="stickies"
+            defaultPosition={stickyPosition}
+            nodeRef={nodeRef}
+            onDrag={(data) => isDragging(data)}
+            onStop={(e, data) => savePosition(data)}
             key={idx}
           >
-            <Sticky
+            <div
+              ref={nodeRef}
               style={{
-                backgroundColor: "#F1F172",
-                fontFamily: "Gloria Hallelujah, cursive"
+                display: isVisible,
+                flexDirection: "row",
+                justifyContent: "flex-start",
+                alignItems: "flex-end"
               }}
-              onClick={() => toggleVisibility()}
-            />
-          </div>
+            >
+              <Sticky
+                style={{
+                  backgroundColor: "#F1F172",
+                  fontFamily: "Gloria Hallelujah, cursive"
+                }}
+                onClick={() => toggleVisibility()}
+              />
+            </div>
+          </Draggable>
         );
       })}
     </div>
@@ -95,3 +114,7 @@ const [bgColor, setBgColor] = useState(["#F1F172"]);
 
 
 */
+// localStorage.setItem(
+//   `stickyPosition`,
+//   JSON.stringify({ x: data.x, y: data.y })
+// );
