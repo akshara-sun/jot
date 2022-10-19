@@ -1,21 +1,43 @@
-import "./styles.css";
-import Thumbnails from "./components/thumbnails";
+import React from 'react';
+import { Box, Grid, Typography } from '@mui/material';
+import Thumbnail from './thumbnail';
 
-export default function HomePage() {
+
+const HomePage = ()  => {
   return (
-    <div className="HomePage">
-      <h1 className="welcome-message">
-        Welcome to Jot.
-        <img
-          alt="Pen drawing "
-          src="https://img.icons8.com/glyph-neue/32/000000/autograph.png"
-          href="https://icons8.com/icon/fx5qUnmt4dAr/autograph"
-        />
-      </h1>
-      <h3>Pick your canvas</h3>
-      <div className="canvas-options">
-        <Thumbnails />
-      </div>
-    </div>
+    <Box sx={{ 
+      display: 'flex', 
+      justifyContent: 'center', 
+      alignItems: 'center', 
+      height: '70vh' 
+    }}>
+      <Grid container>
+        <Grid item xs={12} textAlign="center">
+          <Typography variant="h2">
+            Welcome to Jot
+          </Typography>
+          <Typography variant="subtitle1" sx={{ pb: 2}}>
+            Pick your canvas
+          </Typography>
+          <Grid 
+            item 
+            container 
+            columnSpacing={3} 
+            sx={{ justifyContent: 'center' }}
+          >
+            <Grid item xs={3}>
+              <Thumbnail 
+              sticky={true}
+              name="Stickies" />
+            </Grid>  
+            <Grid item xs={3}>
+              <Thumbnail name="Blank canvas" />
+            </Grid>            
+          </Grid>
+        </Grid>
+      </Grid>
+    </Box>
   );
-}
+};
+
+export default HomePage;

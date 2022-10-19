@@ -1,3 +1,4 @@
+import React from 'react';
 import ReactDOM from "react-dom";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import HomePage from "./home";
@@ -8,7 +9,7 @@ ReactDOM.render(
   <BrowserRouter>
     <Routes>
       <Route path="/" element={<HomePage />} />
-      <Route path="/sticky-canvas" element={<StickyCanvas />} />
+      <Route path="/stickies" element={<StickyCanvas />} />
     </Routes>
   </BrowserRouter>,
   rootElement
