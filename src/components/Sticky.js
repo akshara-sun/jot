@@ -1,56 +1,67 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import PropTypes from "prop-types";
 import Draggable from "react-draggable";
-import { Box, Grid, IconButton, TextField } from "@mui/material";
-import CloseIcon from '@mui/icons-material/Close';
+import { TextField, IconButton, Paper, Button } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
 
-const Sticky = (props) => {
-  const [text, handleTextChange] = useState("");
-  const [isVisible, setVisibility] = useState("flex");
+const Sticky = ({ visibility, onClose }) => {
   const nodeRef = React.useRef(null);
+  const [text, setText] = useState("");
+  const [currentPosition, setCurrentPosition] = useState({ x: 0, y: 0 });
 
-  const toggleVisibility = () => {
-    if (
-      window.confirm(
-        "Are you sure you want to delete this note? This action cannot be undone."
-      )
-    ) {
-      setVisibility("hidden");
-      localStorage.removeItem("inputValue");
-    }
+  console.log(currentPosition);
+
+  const handleDrag = (event, data) => {
+    setCurrentPosition({ x: data.x, y: data.y });
   };
 
-  const handleChange = (e) => {
-    handleTextChange(e.target.value);
-    localStorage.setItem("inputValue", e.target.value);
+  const handleStop = () => {
+    localStorage.setItem("stickyPosition", JSON.stringify(currentPosition));
   };
-
-  useEffect(() => {
-    handleTextChange(localStorage.getItem("inputValue"));
-  }, []);
 
   return (
-    <Draggable nodeRef={nodeRef}>
-      <Box ref={nodeRef} sx={{ display: isVisible, height: '199px', width: '199px', border: 1, borderRadius: 1 }}>
-        <Grid container>          
-          <Grid item xs={12}>
-            <IconButton variant="outlined" onClick={toggleVisibility} color="error">
-              <CloseIcon />
-            </IconButton>
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-            multiline
-            maxRows={6}
-            minRows={2}
-            value={text}
-            onChange={handleChange}
-            />
-          </Grid>
-        </Grid>
-      </Box>
-
+    <Draggable
+      nodeRef={nodeRef}
+      defaultPosition={{ x: 0, y: 0 }}
+      position={currentPosition}
+      onDrag={handleDrag}
+      onStop={handleStop}
+      scale={1}
+    >
+      <Paper
+        elevation={5}
+        sx={{
+          visibility: visibility,
+          textAlign: "center",
+          backgroundColor: "#EBD4A2",
+          height: 200,
+          width: 200,
+        }}
+      >
+        <IconButton sx={{ float: "right" }} onClick={onClose}>
+          <CloseIcon />
+        </IconButton>
+        <TextField
+          variant="standard"
+          sx={{ mb: 1 }}
+          multiline
+          minRows={5}
+          maxRows={15}
+          value={text}
+          placeholder="Enter text here"
+          onChange={(e) => setText(e.target.value)}
+        />
+        <Button variant="text" sx={{ float: 'right', p: 0, color: 'black' }}>
+          Save
+        </Button>
+      </Paper>
     </Draggable>
   );
+};
+
+Sticky.propTypes = {
+  visibility: PropTypes.string.isRequired,
+  onClose: PropTypes.func.isRequired,
 }
 
 export default Sticky;

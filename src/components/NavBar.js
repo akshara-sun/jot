@@ -1,6 +1,5 @@
 import React from "react";
 import { Box, Toolbar, Typography } from "@mui/material";
-import HomeIcon from "@mui/icons-material/HomeSharp";
 import NotepadIcon from "@mui/icons-material/SubjectSharp";
 import BlankScrollIcon from "@mui/icons-material/HistoryEduSharp";
 import { Link } from "react-router-dom";
