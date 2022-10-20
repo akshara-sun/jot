@@ -4,7 +4,11 @@ import Draggable from "react-draggable";
 import { TextField, IconButton, Paper, Button } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 
-const Sticky = ({ visibility, onClose }) => {
+const Sticky = ({
+  visibility,
+  onClose,
+  onSave,
+}) => {
   const nodeRef = React.useRef(null);
   const [text, setText] = useState("");
   const [currentPosition, setCurrentPosition] = useState({ x: 0, y: 0 });
@@ -51,7 +55,7 @@ const Sticky = ({ visibility, onClose }) => {
           placeholder="Enter text here"
           onChange={(e) => setText(e.target.value)}
         />
-        <Button variant="text" sx={{ float: 'right', p: 0, color: 'black' }}>
+        <Button variant="text" sx={{ float: 'right', p: 0, color: 'black' }} onClick={onSave}>
           Save
         </Button>
       </Paper>

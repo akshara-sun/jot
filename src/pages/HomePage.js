@@ -34,13 +34,6 @@ const HomePage = () => {
             >
               <Thumbnail color="#EBD4A2" name="Stickies" />
             </Grid>
-            <Grid 
-              item 
-              xs={3}
-              component={Link}
-              to="/blank-canvas">
-              <Thumbnail name="Blank canvas" />
-            </Grid>
             <Grid item xs={3}
             component={Link}
             to="/notepad">
@@ -49,6 +42,13 @@ const HomePage = () => {
                 image={`url(${notepad})`}
                 name="Notepad"
               />
+            </Grid>
+            <Grid 
+              item 
+              xs={3}
+              component={Link}
+              to="/blank-canvas">
+              <Thumbnail name="Blank canvas" />
             </Grid>
           </Grid>
         </Grid>

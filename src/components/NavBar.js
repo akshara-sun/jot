@@ -1,11 +1,10 @@
 import React from "react";
 import { Box, Toolbar, Typography } from "@mui/material";
-import NotepadIcon from "@mui/icons-material/SubjectSharp";
-import BlankScrollIcon from "@mui/icons-material/HistoryEduSharp";
 import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
 import LineIcon from '@mui/icons-material/DriveFileRenameOutline';
 
-const NavBar = () => {
+const NavBar = ({ children }) => {
   return (
     <Toolbar
       variant="dense"
@@ -31,38 +30,18 @@ const NavBar = () => {
         <LineIcon fontSize="small" />
       </Typography>
       <Box sx={{ display: 'flex', alignItems: 'center' }}>
-        <Typography
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            color: "black",
-            textDecoration: "none",
-            px: 2
-          }}
-          variant="overline"
-          component={Link}
-          to="/notepad"
-        >
-          <NotepadIcon fontSize="small" sx={{ mr: 1 }} />
-          Notedpad
-        </Typography>
-        <Typography
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            color: "black",
-            textDecoration: "none",
-          }}
-          variant="overline"
-          component={Link}
-          to="/blank-canvas"
-        >
-          <BlankScrollIcon fontSize="small" sx={{ mr: 1 }} />
-          Blank Canvas
-        </Typography>
+        {children}
       </Box>
     </Toolbar>
   );
+};
+
+NavBar.propTypes = {
+  children: PropTypes.node,
+};
+
+NavBar.defaultProps = {
+  children: null,
 };
 
 export default NavBar;
