@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import Draggable from "react-draggable";
 import { TextField, IconButton, Paper, Button } from "@mui/material";
@@ -12,8 +12,6 @@ const Sticky = ({
   const nodeRef = React.useRef(null);
   const [text, setText] = useState("");
   const [currentPosition, setCurrentPosition] = useState({ x: 0, y: 0 });
-
-  console.log(currentPosition);
 
   const handleDrag = (event, data) => {
     setCurrentPosition({ x: data.x, y: data.y });

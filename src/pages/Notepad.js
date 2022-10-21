@@ -87,7 +87,7 @@ const Notepad = () => {
             </Grid>
           </>
         ) : (
-          <NoDataCTA label='Add Sticky' onClick={handleAddPage} />
+          <NoDataCTA label='Add page' onClick={handleAddPage} />
         )}
       </Grid>
     </Grid>
