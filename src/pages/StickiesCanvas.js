@@ -9,23 +9,13 @@ import BlankScrollIcon from "@mui/icons-material/HistoryEduSharp";
 
 const StickiesCanvas = () => {
   const [stickies, setStickies] = useState([]);
-  const [position, setPosition] = useState({ x: 0, y: 0 });
-  const [visibility, setVisibility] = useState("visible");
 
   useEffect(() => {
     const sticky = localStorage.getItem("stickies");
-    if (sticky) {
+    if (sticky.length > 0) {
       setStickies(JSON.parse(sticky));
     }
   }, []);
-
-  const handleDrag = (e, ui) => {
-    const { x, y } = position;
-    setPosition({
-      x: x + ui.deltaX,
-      y: y + ui.deltaY,
-    });
-  };
 
   const handleAddSticky = () => {
     const newSticky = {
@@ -37,8 +27,13 @@ const StickiesCanvas = () => {
   };
 
   const handleDeleteSticky = (id) => {
-    setStickies(stickies.filter((sticky) => sticky.id !== id));
-    localStorage.setItem("stickies", JSON.stringify(stickies));
+    if (window.confirm("Are you sure you want to delete this sticky?")) {
+      const newStickies = stickies.filter((sticky) => sticky.id !== id);
+      setStickies(newStickies);
+      localStorage.setItem("stickies", JSON.stringify(newStickies));
+    } else {
+      return;
+    } 
   };
 
   const handleSaveSticky = (id, text, title) => {
@@ -99,17 +94,12 @@ const StickiesCanvas = () => {
           </Typography>
         </NavBar>
       </Grid>
-      <Grid item xs={12} sx={{ justifyContent: 'center' }}>
-        {stickies.length === 0 && visibility === "visible" ? (
+      <Grid item xs={12} sx={{ display: "flex", justifyContent: "center" }}>
+        {stickies.length === 0 ? (
           <NoDataCTA label='Add sticky' onClick={handleAddSticky} />
         ) : (
-          <Button variant='contained' color="success" onClick={handleAddSticky}>
+          <Button variant='contained' color='info' onClick={handleAddSticky}>
             Add sticky
-          </Button>
-        )}
-        {visibility === "hidden" && (
-          <Button variant='contained' color="success" onClick={() => setVisibility("visible")} sx={{ ml: 2 }}>
-            Show stickies
           </Button>
         )}
       </Grid>
@@ -120,11 +110,7 @@ const StickiesCanvas = () => {
               <Sticky
                 id={sticky.id}
                 content={sticky}
-                position={position}
-                visibility={visibility}
-                onClose={() => setVisibility("hidden")}
                 onDelete={handleDeleteSticky}
-                onDrag={handleDrag}
                 onSave={() =>
                   handleSaveSticky(sticky.id, sticky.text, sticky.title)
                 }
