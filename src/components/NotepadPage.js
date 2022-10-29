@@ -1,10 +1,14 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { Box, Grid, Paper, IconButton, TextField } from "@mui/material";
 import notepad from "../assets/images/notepad_no_margin.png";
 import DeleteIcon from "@mui/icons-material/Delete";
 import SaveIcon from "@mui/icons-material/Save";
 
-const NotepadPage = ({ onDelete }) => {
+const NotepadPage = ({
+    onDelete,
+    onSave,
+}) => {
   return (
     <Box
       component={Paper}
@@ -24,7 +28,7 @@ const NotepadPage = ({ onDelete }) => {
           <IconButton
             color='success'
             sx={{ float: "right" }}
-            onClick={onDelete}
+            onClick={onSave}
           >
             <SaveIcon />
           </IconButton>
@@ -59,6 +63,11 @@ const NotepadPage = ({ onDelete }) => {
       </Grid>
     </Box>
   );
+};
+
+NotepadPage.propTypes = {
+    onDelete: PropTypes.func.isRequired,
+    onSave: PropTypes.func.isRequired,
 };
 
 export default NotepadPage;

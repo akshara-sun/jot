@@ -23,6 +23,15 @@ const Notepad = () => {
     setPages(pages.filter((page) => page.id !== id));
   };
 
+  const handleSavePage = (id, text, title) => {
+    const page = {
+      id,
+      text,
+      title,
+    };
+    localStorage.setItem("pages", JSON.stringify([...pages, page]));
+  };
+
   return (
     <Grid container>
       <Grid item xs={12}>
@@ -80,7 +89,10 @@ const Notepad = () => {
               {pages.map((page) => (
                 <Grid item xs={7} key={page.id}>
                   <NotepadPage
-                   onDelete={() => handleDeletePage(page.id)}
+                    onDelete={() => handleDeletePage(page.id)}
+                    onSave={() =>
+                      handleSavePage(page.id, page.text, page.title)
+                    }
                   />
                 </Grid>
               ))}

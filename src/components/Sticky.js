@@ -1,69 +1,94 @@
-import React, { useState } from "react";
-import PropTypes from "prop-types";
+import React, { useRef } from "react";
 import Draggable from "react-draggable";
-import { TextField, IconButton, Paper, Button } from "@mui/material";
+import { Grid, TextField, IconButton, Paper } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
+import DeleteIcon from "@mui/icons-material/Delete";
+import SaveIcon from "@mui/icons-material/Save";
 
+// Sticky note component that can be dragged around the screen
 const Sticky = ({
-  visibility,
-  onClose,
+  id,
+  content,
+  position,
+  onDelete,
+  onDrag,
   onSave,
+  onContentTitleChange,
+  onContentBodyChange,
 }) => {
-  const nodeRef = React.useRef(null);
-  const [text, setText] = useState("");
-  const [currentPosition, setCurrentPosition] = useState({ x: 0, y: 0 });
-
-  const handleDrag = (event, data) => {
-    setCurrentPosition({ x: data.x, y: data.y });
-  };
-
-  const handleStop = () => {
-    localStorage.setItem("stickyPosition", JSON.stringify(currentPosition));
-  };
+  const nodeRef = useRef(null);
 
   return (
     <Draggable
       nodeRef={nodeRef}
       defaultPosition={{ x: 0, y: 0 }}
-      position={currentPosition}
-      onDrag={handleDrag}
-      onStop={handleStop}
+      position={position}
+      onDrag={onDrag}
       scale={1}
     >
       <Paper
-        elevation={5}
         sx={{
-          visibility: visibility,
-          textAlign: "center",
-          backgroundColor: "#EBD4A2",
-          height: 200,
-          width: 200,
+          position: "absolute",
+          width: 300,
+          height: 300,
+          zIndex: 1,
+          overflow: "hidden",
+          boxShadow: 3,
         }}
       >
-        <IconButton sx={{ float: "right" }} onClick={onClose}>
-          <CloseIcon />
-        </IconButton>
-        <TextField
-          variant="standard"
-          sx={{ mb: 1 }}
-          multiline
-          minRows={5}
-          maxRows={15}
-          value={text}
-          placeholder="Enter text here"
-          onChange={(e) => setText(e.target.value)}
-        />
-        <Button variant="text" sx={{ float: 'right', p: 0, color: 'black' }} onClick={onSave}>
-          Save
-        </Button>
+        <Grid container>
+          <Grid item xs={12}>
+            <IconButton
+              color="error"
+              onClick={() => onDelete(id)}
+            >
+              <DeleteIcon fontSize="small" />
+            </IconButton>
+            <IconButton
+              color="success"
+              onClick={onSave}
+            >
+              <SaveIcon fontSize="small" />
+            </IconButton>
+            <IconButton color="info" sx={{ float: "right" }}>
+              <CloseIcon fontSize="small" />
+            </IconButton>
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              fullWidth
+              placeholder="Title"
+              sx={{
+                ".MuiInputBase-input": {
+                  py: 0,
+                  fontSize: 32,
+                },
+              }}
+              value={content.title}
+              onChange={onContentTitleChange}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              multiline
+              rows={10}
+              fullWidth
+              sx={{
+                textAlign: "flex-start",
+                overflowY: "scroll",
+                ".MuiInputBase-root": {
+                  py: 0,
+                  fontSize: 24,
+                },
+              }}
+              value={content.text}
+              onChange={onContentBodyChange}
+            />
+          </Grid>
+        </Grid>
       </Paper>
     </Draggable>
   );
 };
-
-Sticky.propTypes = {
-  visibility: PropTypes.string.isRequired,
-  onClose: PropTypes.func.isRequired,
-}
 
 export default Sticky;

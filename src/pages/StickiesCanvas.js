@@ -9,40 +9,65 @@ import BlankScrollIcon from "@mui/icons-material/HistoryEduSharp";
 
 const StickiesCanvas = () => {
   const [stickies, setStickies] = useState([]);
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+
+  // show stickies after page loads
+  useEffect(() => {
+    const sticky = localStorage.getItem("stickies");
+    if (sticky) {
+      setStickies(JSON.parse(sticky));
+    }
+  }, []);
+
+  const handleDrag = (e, ui) => {
+    const { x, y } = position;
+    setPosition({
+      x: x + ui.deltaX,
+      y: y + ui.deltaY,
+    });
+  };
 
   const handleAddSticky = () => {
     const newSticky = {
       id: new Date().getTime(),
+      title: "",
       text: "",
-      position: { x: 0, y: 0 },
     };
     setStickies([...stickies, newSticky]);
   };
 
   const handleDeleteSticky = (id) => {
     setStickies(stickies.filter((sticky) => sticky.id !== id));
+    localStorage.setItem("stickies", JSON.stringify(stickies));
   };
 
-  const handleSaveSticky = (id, text) => {
-    const stickyPosition = JSON.parse(localStorage.getItem("stickyPosition"));
-    const sticky = {
-      id,
-      text,
-      position: stickyPosition,
-    };
-    localStorage.setItem("stickies", JSON.stringify([...stickies, sticky]));
+  const handleSaveSticky = (id, text, title) => {
+    const index = stickies.findIndex((sticky) => sticky.id === id);
+    stickies.splice(index, 1, { id, text, title });
+    localStorage.setItem("stickies", JSON.stringify(stickies));
   };
 
-  useEffect(() => {
-    const stickyData = JSON.parse(localStorage.getItem("stickies"));
-    if (stickyData) {
-      setStickies(stickyData);
-    }
-  }, []);
+  const handleTitleChange = (e, id) => {
+    const newTitle = e.target.value;
+    setStickies(
+      stickies.map((sticky) =>
+        sticky.id === id ? { ...sticky, title: newTitle } : sticky
+      )
+    );
+  };
+
+  const handleBodyChange = (e, id) => {
+    const newText = e.target.value;
+    setStickies(
+      stickies.map((sticky) =>
+        sticky.id === id ? { ...sticky, text: newText } : sticky
+      )
+    );
+  };
 
   return (
-    <Grid container direction='column' sx={{ height: "100vh" }}>
-      <Grid item>
+    <Grid container>
+      <Grid item xs={12}>
         <NavBar>
           <Typography
             sx={{
@@ -57,7 +82,7 @@ const StickiesCanvas = () => {
             to='/notepad'
           >
             <NotepadIcon fontSize='small' sx={{ mr: 1 }} />
-            Notedpad
+            Notepad
           </Typography>
           <Typography
             sx={{
@@ -65,6 +90,7 @@ const StickiesCanvas = () => {
               alignItems: "center",
               color: "black",
               textDecoration: "none",
+              px: 2,
             }}
             variant='overline'
             component={Link}
@@ -75,39 +101,38 @@ const StickiesCanvas = () => {
           </Typography>
         </NavBar>
       </Grid>
-      <Grid item sx={{ flexGrow: 1, overflow: "auto" }}>
-        {stickies.length > 0 ? (
-          <>
-            <Grid item container justifyContent='center' alignItems='center'>
-              <Grid item>
-                <Button
-                  variant='contained'
-                  onClick={handleAddSticky}
-                  color='success'
-                  sx={{
-                    py: 2,
-                    px: 4,
-                  }}
-                >
-                  Add Sticky
-                </Button>
-              </Grid>
-            </Grid>
-            <Grid item container sx={{ p: 2 }}>
-              {stickies.map((sticky) => (
-                <Grid item xs={12} sm={6} md={4} lg={2} key={sticky.id}>
-                  <Sticky
-                    visibility='visible'
-                    onClose={() => handleDeleteSticky(sticky.id)}
-                    onSave={() => handleSaveSticky(sticky.id, sticky.text)}
-                  />
-                </Grid>
-              ))}
-            </Grid>
-          </>
+      <Grid item xs={12} justifyContent='center'>
+        {stickies.length === 0 ? (
+          <NoDataCTA label='Add sticky' onClick={handleAddSticky} />
         ) : (
-          <NoDataCTA label='Add Sticky' onClick={handleAddSticky} />
+          <Button variant='contained' onClick={handleAddSticky}>
+            Add sticky
+          </Button>
         )}
+      </Grid>
+      <Grid item xs={12}>
+        <Grid item container>
+          {stickies.map((sticky) => (
+            <Grid item xs={3} key={sticky.id}>
+              <Sticky
+                id={sticky.id}
+                content={sticky}
+                position={position}
+                onDelete={handleDeleteSticky}
+                onDrag={handleDrag}
+                onSave={() =>
+                  handleSaveSticky(
+                    sticky.id,
+                    sticky.text,
+                    sticky.title
+                  )
+                }
+                onContentTitleChange={(e) => handleTitleChange(e, sticky.id)}
+                onContentBodyChange={(e) => handleBodyChange(e, sticky.id)}
+              />
+            </Grid>
+          ))}
+        </Grid>
       </Grid>
     </Grid>
   );
