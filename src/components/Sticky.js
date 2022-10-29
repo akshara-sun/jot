@@ -5,11 +5,12 @@ import CloseIcon from "@mui/icons-material/Close";
 import DeleteIcon from "@mui/icons-material/Delete";
 import SaveIcon from "@mui/icons-material/Save";
 
-// Sticky note component that can be dragged around the screen
 const Sticky = ({
   id,
   content,
   position,
+  visibility,
+  onClose,
   onDelete,
   onDrag,
   onSave,
@@ -34,6 +35,7 @@ const Sticky = ({
           zIndex: 1,
           overflow: "hidden",
           boxShadow: 3,
+          visibility: visibility
         }}
       >
         <Grid container>
@@ -50,7 +52,7 @@ const Sticky = ({
             >
               <SaveIcon fontSize="small" />
             </IconButton>
-            <IconButton color="info" sx={{ float: "right" }}>
+            <IconButton color="info" sx={{ float: "right" }} onClick={onClose}>
               <CloseIcon fontSize="small" />
             </IconButton>
           </Grid>

@@ -10,8 +10,8 @@ import BlankScrollIcon from "@mui/icons-material/HistoryEduSharp";
 const StickiesCanvas = () => {
   const [stickies, setStickies] = useState([]);
   const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [visibility, setVisibility] = useState("visible");
 
-  // show stickies after page loads
   useEffect(() => {
     const sticky = localStorage.getItem("stickies");
     if (sticky) {
@@ -79,8 +79,7 @@ const StickiesCanvas = () => {
             }}
             variant='overline'
             component={Link}
-            to='/notepad'
-          >
+            to='/notepad'>
             <NotepadIcon fontSize='small' sx={{ mr: 1 }} />
             Notepad
           </Typography>
@@ -94,19 +93,23 @@ const StickiesCanvas = () => {
             }}
             variant='overline'
             component={Link}
-            to='/blank-canvas'
-          >
+            to='/blank-canvas'>
             <BlankScrollIcon fontSize='small' sx={{ mr: 1 }} />
             Blank Canvas
           </Typography>
         </NavBar>
       </Grid>
-      <Grid item xs={12} justifyContent='center'>
-        {stickies.length === 0 ? (
+      <Grid item xs={12} sx={{ justifyContent: 'center' }}>
+        {stickies.length === 0 && visibility === "visible" ? (
           <NoDataCTA label='Add sticky' onClick={handleAddSticky} />
         ) : (
-          <Button variant='contained' onClick={handleAddSticky}>
+          <Button variant='contained' color="success" onClick={handleAddSticky}>
             Add sticky
+          </Button>
+        )}
+        {visibility === "hidden" && (
+          <Button variant='contained' color="success" onClick={() => setVisibility("visible")} sx={{ ml: 2 }}>
+            Show stickies
           </Button>
         )}
       </Grid>
@@ -118,14 +121,12 @@ const StickiesCanvas = () => {
                 id={sticky.id}
                 content={sticky}
                 position={position}
+                visibility={visibility}
+                onClose={() => setVisibility("hidden")}
                 onDelete={handleDeleteSticky}
                 onDrag={handleDrag}
                 onSave={() =>
-                  handleSaveSticky(
-                    sticky.id,
-                    sticky.text,
-                    sticky.title
-                  )
+                  handleSaveSticky(sticky.id, sticky.text, sticky.title)
                 }
                 onContentTitleChange={(e) => handleTitleChange(e, sticky.id)}
                 onContentBodyChange={(e) => handleBodyChange(e, sticky.id)}
