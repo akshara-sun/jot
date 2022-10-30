@@ -95,7 +95,7 @@ const Sticky = ({
 };
 
 Sticky.propTypes = {
-  id: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired,
   content: PropTypes.object.isRequired,
   onDelete: PropTypes.func.isRequired,
   onSave: PropTypes.func.isRequired,

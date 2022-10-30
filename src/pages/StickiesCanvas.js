@@ -12,10 +12,10 @@ const StickiesCanvas = () => {
 
   useEffect(() => {
     const sticky = localStorage.getItem("stickies");
-    if (sticky.length > 0) {
+    if (!sticky) {
+      return;
+    } else if (sticky.length > 0) {
       setStickies(JSON.parse(sticky));
-    } else {
-      setStickies([]);
     }
   }, []);
 
