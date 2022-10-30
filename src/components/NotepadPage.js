@@ -1,9 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Box, Grid, Paper, IconButton, TextField } from "@mui/material";
+import { Box, Button, Grid, Paper, IconButton, TextField } from "@mui/material";
 import notepad from "../assets/images/notepad_no_margin.png";
 import DeleteIcon from "@mui/icons-material/Delete";
-import SaveIcon from "@mui/icons-material/Save";
 
 const NotepadPage = ({
     onDelete,
@@ -21,17 +20,16 @@ const NotepadPage = ({
       }}
     >
       <Grid container rowSpacing={1}>
-        <Grid item xs={12} sx={{ pb: 4, textAlign: "right" }}>
+        <Grid item xs={12} sx={{ pb: 4 }}>
           <IconButton color='error' sx={{ float: "right" }} onClick={onDelete}>
             <DeleteIcon />
           </IconButton>
-          <IconButton
+          <Button
             color='success'
-            sx={{ float: "right" }}
             onClick={onSave}
           >
-            <SaveIcon />
-          </IconButton>
+            Save
+          </Button>
         </Grid>
         <Grid item xs={12}>
           <TextField

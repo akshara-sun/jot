@@ -1,30 +1,34 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
+import PropTypes from "prop-types";
 import Draggable from "react-draggable";
-import { Grid, TextField, IconButton, Paper } from "@mui/material";
+import { Button, Grid, IconButton, Paper, TextField } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import DeleteIcon from "@mui/icons-material/Delete";
-import SaveIcon from "@mui/icons-material/Save";
 
 const Sticky = ({
   id,
   content,
-  position,
-  visibility,
-  onClose,
   onDelete,
-  onDrag,
   onSave,
   onContentTitleChange,
   onContentBodyChange,
 }) => {
+  const [position, setPosition] = useState({ x: 0, y: 0 });
   const nodeRef = useRef(null);
+
+  const handleDrag = (e, ui) => {
+    const { x, y } = position;
+    setPosition({
+      x: x + ui.deltaX,
+      y: y + ui.deltaY,
+    });
+  };
 
   return (
     <Draggable
+      id={id}
       nodeRef={nodeRef}
-      defaultPosition={{ x: 0, y: 0 }}
       position={position}
-      onDrag={onDrag}
+      onDrag={handleDrag}
       scale={1}
     >
       <Paper
@@ -35,24 +39,21 @@ const Sticky = ({
           zIndex: 1,
           overflow: "hidden",
           boxShadow: 3,
-          visibility: visibility
+          '&:hover': {
+            cursor: 'grab'
+          },
+          backgroundColor: '#EBD482',
         }}
       >
         <Grid container>
           <Grid item xs={12}>
-            <IconButton
-              color="error"
-              onClick={() => onDelete(id)}
-            >
-              <DeleteIcon fontSize="small" />
-            </IconButton>
-            <IconButton
+            <Button
               color="success"
               onClick={onSave}
             >
-              <SaveIcon fontSize="small" />
-            </IconButton>
-            <IconButton color="info" sx={{ float: "right" }} onClick={onClose}>
+              Save
+              </Button>
+            <IconButton color="info" sx={{ float: "right" }} onClick={() => onDelete(id)}>
               <CloseIcon fontSize="small" />
             </IconButton>
           </Grid>
@@ -91,6 +92,15 @@ const Sticky = ({
       </Paper>
     </Draggable>
   );
+};
+
+Sticky.propTypes = {
+  id: PropTypes.number.isRequired,
+  content: PropTypes.object.isRequired,
+  onDelete: PropTypes.func.isRequired,
+  onSave: PropTypes.func.isRequired,
+  onContentTitleChange: PropTypes.func.isRequired,
+  onContentBodyChange: PropTypes.func.isRequired,
 };
 
 export default Sticky;
