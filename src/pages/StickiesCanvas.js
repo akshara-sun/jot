@@ -14,6 +14,8 @@ const StickiesCanvas = () => {
     const sticky = localStorage.getItem("stickies");
     if (sticky.length > 0) {
       setStickies(JSON.parse(sticky));
+    } else {
+      setStickies([]);
     }
   }, []);
 
