@@ -75,7 +75,7 @@ const Notepad = () => {
                 <Button
                   variant='contained'
                   onClick={handleAddPage}
-                  color='success'
+                  color='info'
                   sx={{
                     py: 2,
                     px: 4,

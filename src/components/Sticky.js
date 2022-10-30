@@ -1,9 +1,8 @@
 import React, { useRef, useState } from "react";
 import PropTypes from "prop-types";
 import Draggable from "react-draggable";
-import { Grid, TextField, IconButton, Paper } from "@mui/material";
+import { Button, Grid, IconButton, Paper, TextField } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import SaveIcon from "@mui/icons-material/Save";
 
 const Sticky = ({
   id,
@@ -42,17 +41,18 @@ const Sticky = ({
           boxShadow: 3,
           '&:hover': {
             cursor: 'grab'
-          }
+          },
+          backgroundColor: '#EBD482',
         }}
       >
         <Grid container>
           <Grid item xs={12}>
-            <IconButton
+            <Button
               color="success"
               onClick={onSave}
             >
-              <SaveIcon fontSize="small" />
-            </IconButton>
+              Save
+              </Button>
             <IconButton color="info" sx={{ float: "right" }} onClick={() => onDelete(id)}>
               <CloseIcon fontSize="small" />
             </IconButton>

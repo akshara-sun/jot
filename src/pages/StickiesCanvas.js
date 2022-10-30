@@ -29,13 +29,16 @@ const StickiesCanvas = () => {
   };
 
   const handleDeleteSticky = (id) => {
-    if (window.confirm("Are you sure you want to delete this sticky?")) {
-      const newStickies = stickies.filter((sticky) => sticky.id !== id);
+    const editedSticky = stickies.find((sticky) => sticky.id === id);
+    const newStickies = stickies.filter((sticky) => sticky.id !== id);
+    if (editedSticky.text === '' && editedSticky.title === '') {
       setStickies(newStickies);
       localStorage.setItem("stickies", JSON.stringify(newStickies));
     } else {
-      return;
-    } 
+      alert("Are you sure you want to delete this sticky? This action cannot be undone.")
+      setStickies(newStickies);
+      localStorage.setItem("stickies", JSON.stringify(newStickies));
+    }
   };
 
   const handleSaveSticky = (id, text, title) => {
