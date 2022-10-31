@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Box, Button, Grid, Paper, IconButton, TextField } from "@mui/material";
-import notepad from "../assets/images/notepad_no_margin.png";
 import DeleteIcon from "@mui/icons-material/Delete";
 
 const NotepadPage = ({
@@ -14,9 +13,6 @@ const NotepadPage = ({
       sx={{
         height: "90vh",
         width: "100%",
-        backgroundImage: `url(${notepad})`,
-        backgroundRepeat: "no-repeat",
-        backgroundSize: "cover",
       }}
     >
       <Grid container rowSpacing={1}>
