@@ -27,7 +27,7 @@ const NavBar = ({ children }) => {
         to="/"
       >
         Jot
-        <LineIcon fontSize="small" />
+        <LineIcon fontSize="small" sx={{ ml: 1 }} />
       </Typography>
       <Box sx={{ display: 'flex', alignItems: 'center' }}>
         {children}
