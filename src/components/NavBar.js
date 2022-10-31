@@ -2,7 +2,10 @@ import React from "react";
 import { Box, Toolbar, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
-import LineIcon from '@mui/icons-material/DriveFileRenameOutline';
+import JotIcon from "../assets/images/jot-icon.png";
+import StickyNoteIcon from "@mui/icons-material/StickyNote2";
+import NotepadIcon from "@mui/icons-material/SubjectSharp";
+import BlankScrollIcon from "@mui/icons-material/HistoryEduSharp";
 
 const NavBar = ({ children }) => {
   return (
@@ -10,7 +13,6 @@ const NavBar = ({ children }) => {
       variant="dense"
       sx={{
         display: "flex",
-        justifyContent: "space-between",
         alignItems: "center",
       }}
     >
@@ -26,11 +28,52 @@ const NavBar = ({ children }) => {
         component={Link}
         to="/"
       >
-        Jot
-        <LineIcon fontSize="small" />
+        <Box component="img" src={JotIcon} height="40px" />
       </Typography>
       <Box sx={{ display: 'flex', alignItems: 'center' }}>
-        {children}
+      <Typography
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              color: "black",
+              textDecoration: "none",
+              px: 2,
+            }}
+            variant='overline'
+            component={Link}
+            to='/stickies'
+          >
+            <StickyNoteIcon fontSize='small' sx={{ mr: 1 }} />
+            Stickies
+        </Typography>
+        <Typography
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              color: "black",
+              textDecoration: "none",
+              px: 2,
+            }}
+            variant='overline'
+            component={Link}
+            to='/notepad'>
+            <NotepadIcon fontSize='small' sx={{ mr: 1 }} />
+            Notepad
+          </Typography>
+          <Typography
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              color: "black",
+              textDecoration: "none",
+            }}
+            variant='overline'
+            component={Link}
+            to='/blank-canvas'
+          >
+            <BlankScrollIcon fontSize='small' sx={{ mr: 1 }} />
+            Drawing Canvas
+          </Typography>
       </Box>
     </Toolbar>
   );

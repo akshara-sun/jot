@@ -3,6 +3,7 @@ import { Box, Grid, Typography, Grow } from "@mui/material";
 import { Link } from "react-router-dom";
 import Thumbnail from "../components/Thumbnail";
 import notepad from "../assets/images/notepad.png";
+import JotIcon from "../assets/images/jot-icon.png";
 
 const HomePage = () => {
   return (
@@ -16,7 +17,10 @@ const HomePage = () => {
       <Grid container>
         <Grid item xs={12} textAlign='center'>
           <Grow in={true} timeout={500}>
-            <Typography variant='h2'>Welcome to Jot</Typography>
+            <Typography variant='h2'>
+              Welcome to Jot
+              <Box component="img" src={JotIcon} height="60px" />
+            </Typography>
           </Grow>
           <Grow in={true} timeout={1000}>
           <Typography variant='subtitle1' sx={{ pb: 2 }}>

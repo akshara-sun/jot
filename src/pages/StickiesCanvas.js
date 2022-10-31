@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import NoDataCTA from "../components/NoDataCTA.js";
 import NavBar from "../components/NavBar";
 import Sticky from "../components/Sticky";
-import NotepadIcon from "@mui/icons-material/SubjectSharp";
 import BlankScrollIcon from "@mui/icons-material/HistoryEduSharp";
 
 const StickiesCanvas = () => {
@@ -68,36 +67,7 @@ const StickiesCanvas = () => {
   return (
     <Grid container>
       <Grid item xs={12}>
-        <NavBar>
-          <Typography
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              color: "black",
-              textDecoration: "none",
-              px: 2,
-            }}
-            variant='overline'
-            component={Link}
-            to='/notepad'>
-            <NotepadIcon fontSize='small' sx={{ mr: 1 }} />
-            Notepad
-          </Typography>
-          <Typography
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              color: "black",
-              textDecoration: "none",
-              px: 2,
-            }}
-            variant='overline'
-            component={Link}
-            to='/blank-canvas'>
-            <BlankScrollIcon fontSize='small' sx={{ mr: 1 }} />
-            Blank Canvas
-          </Typography>
-        </NavBar>
+        <NavBar />
       </Grid>
       <Grid item xs={12} sx={{ display: "flex", justifyContent: "center" }}>
         {stickies.length === 0 ? (
