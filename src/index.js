@@ -2,18 +2,18 @@ import React from 'react';
 import ReactDOM from "react-dom";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import HomePage from "./pages/HomePage";
-import StickyCanvas from "./pages/StickiesCanvas";
-import Notepad from "./pages/Notepad";
-import BlankCanvas from './pages/BlankCanvas';
+import StickiesCanvas from './pages/Canvas/StickiesCanvas';
+import NotepadCanvas from './pages/Canvas/NotepadCanvas';
+import DrawingCanvas from './pages/Canvas/DrawingCanvas';
 
 const rootElement = document.getElementById("root");
 ReactDOM.render(
   <BrowserRouter>
     <Routes>
       <Route path="/" element={<HomePage />} />
-      <Route path="/stickies" element={<StickyCanvas />} />
-      <Route path="/notepad" element={<Notepad />} />
-      <Route path="/blank-canvas" element={<BlankCanvas />} />
+      <Route path='/stickies' element={<StickiesCanvas />} />
+      <Route path='/notepad' element={<NotepadCanvas />} />
+      <Route path='/draw' element={<DrawingCanvas />} />
     </Routes>
   </BrowserRouter>,
   rootElement

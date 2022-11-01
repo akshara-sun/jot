@@ -1,22 +1,28 @@
 import React, { useEffect, useState } from "react";
-import { Button, Grid, Typography } from "@mui/material";
-import { Link } from "react-router-dom";
-import NoDataCTA from "../components/NoDataCTA.js";
-import NavBar from "../components/NavBar";
-import Sticky from "../components/Sticky";
-import BlankScrollIcon from "@mui/icons-material/HistoryEduSharp";
+import { Button, Grid } from "@mui/material";
+import NoDataCTA from '../../components/NoDataCTA';
+import Sticky from "../../components/Sticky";
+import CanvasHeader from "./CanvasHeader.js";
 
 const StickiesCanvas = () => {
   const [stickies, setStickies] = useState([]);
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [visibility, setVisibility] = useState("visible");
 
   useEffect(() => {
     const sticky = localStorage.getItem("stickies");
-    if (!sticky) {
-      return;
-    } else if (sticky.length > 0) {
+    if (sticky) {
       setStickies(JSON.parse(sticky));
     }
   }, []);
+
+  const handleDrag = (e, ui) => {
+    const { x, y } = position;
+    setPosition({
+      x: x + ui.deltaX,
+      y: y + ui.deltaY,
+    });
+  };
 
   const handleAddSticky = () => {
     const newSticky = {
@@ -28,16 +34,8 @@ const StickiesCanvas = () => {
   };
 
   const handleDeleteSticky = (id) => {
-    const editedSticky = stickies.find((sticky) => sticky.id === id);
-    const newStickies = stickies.filter((sticky) => sticky.id !== id);
-    if (editedSticky.text === '' && editedSticky.title === '') {
-      setStickies(newStickies);
-      localStorage.setItem("stickies", JSON.stringify(newStickies));
-    } else {
-      alert("Are you sure you want to delete this sticky? This action cannot be undone.")
-      setStickies(newStickies);
-      localStorage.setItem("stickies", JSON.stringify(newStickies));
-    }
+    setStickies(stickies.filter((sticky) => sticky.id !== id));
+    localStorage.setItem("stickies", JSON.stringify(stickies));
   };
 
   const handleSaveSticky = (id, text, title) => {
@@ -67,14 +65,19 @@ const StickiesCanvas = () => {
   return (
     <Grid container>
       <Grid item xs={12}>
-        <NavBar />
+        <CanvasHeader />
       </Grid>
-      <Grid item xs={12} sx={{ display: "flex", justifyContent: "center" }}>
-        {stickies.length === 0 ? (
+      <Grid item xs={12} sx={{ justifyContent: 'center' }}>
+        {stickies.length === 0 && visibility === "visible" ? (
           <NoDataCTA label='Add sticky' onClick={handleAddSticky} />
         ) : (
-          <Button variant='contained' color='info' onClick={handleAddSticky}>
+          <Button variant='contained' color="success" onClick={handleAddSticky}>
             Add sticky
+          </Button>
+        )}
+        {visibility === "hidden" && (
+          <Button variant='contained' color="success" onClick={() => setVisibility("visible")} sx={{ ml: 2 }}>
+            Show stickies
           </Button>
         )}
       </Grid>
@@ -85,7 +88,11 @@ const StickiesCanvas = () => {
               <Sticky
                 id={sticky.id}
                 content={sticky}
+                position={position}
+                visibility={visibility}
+                onClose={() => setVisibility("hidden")}
                 onDelete={handleDeleteSticky}
+                onDrag={handleDrag}
                 onSave={() =>
                   handleSaveSticky(sticky.id, sticky.text, sticky.title)
                 }

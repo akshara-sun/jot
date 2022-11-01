@@ -1,11 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Box, Button, Grid, Typography } from "@mui/material";
-import NavBar from "../components/NavBar";
-import { Link } from "react-router-dom";
-import NotepadIcon from "@mui/icons-material/SubjectSharp";
-import StickyNoteIcon from "@mui/icons-material/StickyNote2";
+import CanvasHeader from "./CanvasHeader";
 
-const BlankCanvas = () => {
+const DrawingCanvas = () => {
   const canvasRef = useRef(null);
   const contextRef = useRef(null);
   const [isDrawing, setIsDrawing] = useState(false);
@@ -60,39 +57,8 @@ const BlankCanvas = () => {
 
   return (
     <Grid container>
-      <Grid item xs={12}>
-        <NavBar>
-          <Typography
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              color: "black",
-              textDecoration: "none",
-              px: 2,
-            }}
-            variant='overline'
-            component={Link}
-            to='/stickies'
-          >
-            <StickyNoteIcon fontSize='small' sx={{ mr: 1 }} />
-            Stickies
-          </Typography>
-          <Typography
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              color: "black",
-              textDecoration: "none",
-              px: 2,
-            }}
-            variant='overline'
-            component={Link}
-            to='/notepad'
-          >
-            <NotepadIcon fontSize='small' sx={{ mr: 1 }} />
-            Notedpad
-          </Typography>
-        </NavBar>
+       <Grid item xs={12}>
+        <CanvasHeader />
       </Grid>
       <Grid item xs={12} sx={{ textAlign: "center" }}>
         {canvasIsEmpty ? (
@@ -132,4 +98,4 @@ const BlankCanvas = () => {
   );
 };
 
-export default BlankCanvas;
+export default DrawingCanvas;

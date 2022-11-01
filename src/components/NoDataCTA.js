@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Button, Grid, Typography } from "@mui/material";
 
-const NoDataCTA = ({ label, onClick, children }) => {
+const NoDataCTA = ({ label, onClick }) => {
   return (
     <Grid container justifyContent="center" alignItems="center">
       <Grid item>
@@ -26,7 +26,6 @@ const NoDataCTA = ({ label, onClick, children }) => {
             {label}
           </Typography>
         </Button>
-        {children}
       </Grid>
     </Grid>
   );
@@ -35,11 +34,6 @@ const NoDataCTA = ({ label, onClick, children }) => {
 NoDataCTA.propTypes = {
   label: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,
-  children: PropTypes.node,
 };
-
-NoDataCTA.defaultProps = {
-  children: null,
-}
 
 export default NoDataCTA;

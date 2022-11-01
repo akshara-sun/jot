@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { Button, Grid, Typography } from "@mui/material";
-import NavBar from "../components/NavBar";
-import NoDataCTA from "../components/NoDataCTA";
-import NotepadPage from "../components/NotepadPage";
+import { Button, Grid } from "@mui/material";
+import CanvasHeader from "./CanvasHeader";
+import NoDataCTA from '../../components/NoDataCTA';
+import NotepadPage from "../../components/NotepadPage.js";
 
-const Notepad = () => {
+const NotepadCanvas = () => {
   const [pages, setPages] = useState([]);
 
   const handleAddPage = () => {
@@ -31,8 +31,8 @@ const Notepad = () => {
 
   return (
     <Grid container>
-      <Grid item xs={12}>
-        <NavBar />
+       <Grid item xs={12}>
+        <CanvasHeader />
       </Grid>
       <Grid item sx={{ flexGrow: 1, overflow: "auto" }}>
         {pages.length > 0 ? (
@@ -73,4 +73,4 @@ const Notepad = () => {
   );
 };
 
-export default Notepad;
+export default NotepadCanvas;
