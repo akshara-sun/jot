@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Button, Grid } from "@mui/material";
 import CanvasHeader from "./CanvasHeader";
-import NoDataCTA from '../../components/NoDataCTA';
 import NotepadPage from "../../components/NotepadPage.js";
 
 const NotepadCanvas = () => {
@@ -31,43 +30,31 @@ const NotepadCanvas = () => {
 
   return (
     <Grid container>
-       <Grid item xs={12}>
+      <Grid item xs={12}>
         <CanvasHeader />
       </Grid>
+      <Grid item xs={12} sx={{ textAlign: "center" }}>
+        <Button
+          variant="contained"
+          sx={{
+            backgroundColor: "orange",
+            "&:hover": { backgroundColor: "black" },
+          }}
+          onClick={handleAddPage}>
+          Add page
+        </Button>
+      </Grid>
       <Grid item sx={{ flexGrow: 1, overflow: "auto" }}>
-        {pages.length > 0 ? (
-          <>
-            <Grid item container justifyContent='center' alignItems='center'>
-              <Grid item>
-                <Button
-                  variant='contained'
-                  onClick={handleAddPage}
-                  color='info'
-                  sx={{
-                    py: 2,
-                    px: 4,
-                  }}
-                >
-                  Add page
-                </Button>
-              </Grid>
+        <Grid item container sx={{ mx: 40 }}>
+          {pages.map((page) => (
+            <Grid item xs={7} key={page.id}>
+              <NotepadPage
+                onDelete={() => handleDeletePage(page.id)}
+                onSave={() => handleSavePage(page.id, page.text, page.title)}
+              />
             </Grid>
-            <Grid item container sx={{ mx: 40 }}>
-              {pages.map((page) => (
-                <Grid item xs={7} key={page.id}>
-                  <NotepadPage
-                    onDelete={() => handleDeletePage(page.id)}
-                    onSave={() =>
-                      handleSavePage(page.id, page.text, page.title)
-                    }
-                  />
-                </Grid>
-              ))}
-            </Grid>
-          </>
-        ) : (
-          <NoDataCTA label='Add page' onClick={handleAddPage} />
-        )}
+          ))}
+        </Grid>
       </Grid>
     </Grid>
   );

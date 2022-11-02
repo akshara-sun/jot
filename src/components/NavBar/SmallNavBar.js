@@ -1,15 +1,15 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-import { Box, Grid, Select, MenuItem } from "@mui/material";
+import { Box, Divider, Grid, Select, MenuItem } from "@mui/material";
 import JotIcon from "../../assets/images/jot-icon.png";
 
 const SmallNavBar = ({ tabs, selectedTab, onChange }) => {
   return (
-    <Grid container>
-      <Grid item xs={2} component={Link} to='/'>
+    <Grid container sx={{ py: 1 }}>
+      <Grid item xs={2} component={Link} to="/">
         <Box
-          component='img'
+          component="img"
           src={JotIcon}
           sx={{
             height: 45,
@@ -19,14 +19,27 @@ const SmallNavBar = ({ tabs, selectedTab, onChange }) => {
       </Grid>
       <Grid item xs={10}>
         <Select
-          size='small'
+          variant="standard"
+          disableUnderline
+          size="small"
           fullWidth
-          value={"" || selectedTab.value}
-          label='Age'
+          value={selectedTab}
           onChange={onChange}
           sx={{
-            "& .MuiSelect-select": {
-              color: "black",
+            pt: 1,
+            color: "black",
+            textTransform: "uppercase",
+            fontSize: "1.5rem",
+            fontWeight: "bold",
+          }}
+          MenuProps={{
+            anchorOrigin: {
+              vertical: "bottom",
+              horizontal: "right",
+            },
+            transformOrigin: {
+              vertical: "top",
+              horizontal: "right",
             },
           }}>
           {tabs.map((tab) => (
@@ -34,12 +47,17 @@ const SmallNavBar = ({ tabs, selectedTab, onChange }) => {
               component={Link}
               to={tab.path}
               key={tab.value}
-              value={"" || tab.value}>
+              value={tab.value}
+              sx={{
+                textTransform: "uppercase",
+                fontSize: "0.8rem",
+              }}>
               {tab.label}
             </MenuItem>
           ))}
         </Select>
       </Grid>
+      <Divider />
     </Grid>
   );
 };

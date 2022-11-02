@@ -7,9 +7,9 @@ import JotIcon from "../../assets/images/jot-icon.png";
 const LargeNavBar = ({ tabs, selectedTab, onChange }) => {
   return (
     <Grid container columns={{ xs: 12, sm: 24 }}>
-      <Grid item xs={1} component={Link} to='/'>
+      <Grid item xs={1} component={Link} to="/">
         <Box
-          component='img'
+          component="img"
           src={JotIcon}
           sx={{
             pt: 2,
@@ -25,23 +25,28 @@ const LargeNavBar = ({ tabs, selectedTab, onChange }) => {
           onChange={onChange}
           sx={{
             "& .MuiTabs-indicator": {
+              display: "flex",
+              justifyContent: "center",
               backgroundColor: "#FFA500",
+              marginBottom: 1,
+              mx: 2,
             },
-            pl: 4,
+            pl: 2,
           }}>
           {tabs.map((tab) => (
             <Tab
               key={tab.value}
               value={tab.value}
               icon={tab.icon}
-              iconPosition='start'
+              iconPosition="start"
               label={tab.label}
               component={Link}
               to={tab.path}
               sx={{
+                px: 2,
                 color: "black",
                 "&.Mui-selected": {
-                  color: "orange",
+                  color: "black",
                 },
               }}
             />

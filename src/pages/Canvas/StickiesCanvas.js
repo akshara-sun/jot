@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Button, Grid } from "@mui/material";
-import NoDataCTA from "../../components/NoDataCTA";
 import Sticky from "../../components/Sticky";
 import CanvasHeader from "./CanvasHeader.js";
 
@@ -69,14 +68,16 @@ const StickiesCanvas = () => {
       <Grid item xs={12}>
         <CanvasHeader />
       </Grid>
-      <Grid item xs={12} sx={{ display: "flex", justifyContent: "center" }}>
-        {stickies.length === 0 ? (
-          <NoDataCTA label='Add sticky' onClick={handleAddSticky} />
-        ) : (
-          <Button variant='contained' color='info' onClick={handleAddSticky}>
-            Add sticky
-          </Button>
-        )}
+      <Grid item xs={12} sx={{ textAlign: "center" }}>
+        <Button
+          variant="contained"
+          sx={{
+            backgroundColor: "orange",
+            "&:hover": { backgroundColor: "black" },
+          }}
+          onClick={handleAddSticky}>
+          Add sticky
+        </Button>
       </Grid>
       <Grid item xs={12}>
         <Grid item container>

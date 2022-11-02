@@ -41,9 +41,6 @@ const DrawingCanvas = () => {
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    // To support computers with higher screen density, double the pixel density.
-    canvas.width = window.innerWidth * 2;
-    canvas.height = window.innerHeight * 2;
     canvas.style.width = `${window.innerWidth}px`;
     canvas.style.height = `${window.innerHeight}px`;
 
@@ -57,17 +54,17 @@ const DrawingCanvas = () => {
 
   return (
     <Grid container>
-       <Grid item xs={12}>
+      <Grid item xs={12}>
         <CanvasHeader />
       </Grid>
       <Grid item xs={12} sx={{ textAlign: "center" }}>
         {canvasIsEmpty ? (
-          <Typography variant='overline'>Click and drag to draw</Typography>
+          <Typography variant="overline">Click and drag to draw</Typography>
         ) : (
           <Box>
             <Button
-              color='error'
-              variant='text'
+              color="error"
+              variant="text"
               onClick={() => {
                 contextRef.current.clearRect(
                   0,
@@ -76,11 +73,10 @@ const DrawingCanvas = () => {
                   canvasRef.current.height
                 );
                 setCanvasIsEmpty(true);
-              }}
-            >
+              }}>
               Clear
             </Button>
-            <Button color='success' variant='text' onClick={handleSaveDrawing}>
+            <Button color="success" variant="text" onClick={handleSaveDrawing}>
               Save
             </Button>
           </Box>

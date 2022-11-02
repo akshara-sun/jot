@@ -18,10 +18,6 @@ const CanvasHeader = () => {
     return CANVAS_DATA.find((tab) => tab.path === location.pathname);
   }, [location.pathname]);
 
-  if (!currentTab) {
-    setCurrentTab(currentTabFromLocation);
-  }
-
   const handleTabChange = (event, newValue) => {
     setCurrentTab(newValue);
   };
@@ -33,6 +29,14 @@ const CanvasHeader = () => {
   useEffect(() => {
     setCurrentTab(currentTabFromLocation);
   }, [currentTabFromLocation]);
+
+  if (!currentTab) {
+    setCurrentTab(currentTabFromLocation);
+  }
+
+  if (!currentOption) {
+    setCurrentOption(currentTabFromLocation.value);
+  }
 
   return (
     <Grid container sx={{ mb: 2 }}>
