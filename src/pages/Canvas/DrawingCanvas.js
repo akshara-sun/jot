@@ -1,11 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Box, Button, Grid, Typography } from "@mui/material";
-import NavBar from "../components/NavBar";
-import { Link } from "react-router-dom";
-import NotepadIcon from "@mui/icons-material/SubjectSharp";
-import StickyNoteIcon from "@mui/icons-material/StickyNote2";
+import CanvasHeader from "./CanvasHeader";
 
-const BlankCanvas = () => {
+const DrawingCanvas = () => {
   const canvasRef = useRef(null);
   const contextRef = useRef(null);
   const [isDrawing, setIsDrawing] = useState(false);
@@ -44,9 +41,6 @@ const BlankCanvas = () => {
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    // To support computers with higher screen density, double the pixel density.
-    canvas.width = window.innerWidth * 2;
-    canvas.height = window.innerHeight * 2;
     canvas.style.width = `${window.innerWidth}px`;
     canvas.style.height = `${window.innerHeight}px`;
 
@@ -61,47 +55,16 @@ const BlankCanvas = () => {
   return (
     <Grid container>
       <Grid item xs={12}>
-        <NavBar>
-          <Typography
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              color: "black",
-              textDecoration: "none",
-              px: 2,
-            }}
-            variant='overline'
-            component={Link}
-            to='/stickies'
-          >
-            <StickyNoteIcon fontSize='small' sx={{ mr: 1 }} />
-            Stickies
-          </Typography>
-          <Typography
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              color: "black",
-              textDecoration: "none",
-              px: 2,
-            }}
-            variant='overline'
-            component={Link}
-            to='/notepad'
-          >
-            <NotepadIcon fontSize='small' sx={{ mr: 1 }} />
-            Notedpad
-          </Typography>
-        </NavBar>
+        <CanvasHeader />
       </Grid>
       <Grid item xs={12} sx={{ textAlign: "center" }}>
         {canvasIsEmpty ? (
-          <Typography variant='overline'>Click and drag to draw</Typography>
+          <Typography variant="overline">Click and drag to draw</Typography>
         ) : (
           <Box>
             <Button
-              color='error'
-              variant='text'
+              color="error"
+              variant="text"
               onClick={() => {
                 contextRef.current.clearRect(
                   0,
@@ -110,11 +73,10 @@ const BlankCanvas = () => {
                   canvasRef.current.height
                 );
                 setCanvasIsEmpty(true);
-              }}
-            >
+              }}>
               Clear
             </Button>
-            <Button color='success' variant='text' onClick={handleSaveDrawing}>
+            <Button color="success" variant="text" onClick={handleSaveDrawing}>
               Save
             </Button>
           </Box>
@@ -132,4 +94,4 @@ const BlankCanvas = () => {
   );
 };
 
-export default BlankCanvas;
+export default DrawingCanvas;

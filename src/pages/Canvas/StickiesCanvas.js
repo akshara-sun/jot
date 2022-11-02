@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Button, Grid, Typography } from "@mui/material";
-import { Link } from "react-router-dom";
-import NoDataCTA from "../components/NoDataCTA.js";
-import NavBar from "../components/NavBar";
-import Sticky from "../components/Sticky";
-import BlankScrollIcon from "@mui/icons-material/HistoryEduSharp";
+import { Button, Grid } from "@mui/material";
+import Sticky from "../../components/Sticky";
+import CanvasHeader from "./CanvasHeader.js";
 
 const StickiesCanvas = () => {
   const [stickies, setStickies] = useState([]);
@@ -30,11 +27,13 @@ const StickiesCanvas = () => {
   const handleDeleteSticky = (id) => {
     const editedSticky = stickies.find((sticky) => sticky.id === id);
     const newStickies = stickies.filter((sticky) => sticky.id !== id);
-    if (editedSticky.text === '' && editedSticky.title === '') {
+    if (editedSticky.text === "" && editedSticky.title === "") {
       setStickies(newStickies);
       localStorage.setItem("stickies", JSON.stringify(newStickies));
     } else {
-      alert("Are you sure you want to delete this sticky? This action cannot be undone.")
+      alert(
+        "Are you sure you want to delete this sticky? This action cannot be undone."
+      );
       setStickies(newStickies);
       localStorage.setItem("stickies", JSON.stringify(newStickies));
     }
@@ -67,16 +66,18 @@ const StickiesCanvas = () => {
   return (
     <Grid container>
       <Grid item xs={12}>
-        <NavBar />
+        <CanvasHeader />
       </Grid>
-      <Grid item xs={12} sx={{ display: "flex", justifyContent: "center" }}>
-        {stickies.length === 0 ? (
-          <NoDataCTA label='Add sticky' onClick={handleAddSticky} />
-        ) : (
-          <Button variant='contained' color='info' onClick={handleAddSticky}>
-            Add sticky
-          </Button>
-        )}
+      <Grid item xs={12} sx={{ textAlign: "center" }}>
+        <Button
+          variant="contained"
+          sx={{
+            backgroundColor: "orange",
+            "&:hover": { backgroundColor: "black" },
+          }}
+          onClick={handleAddSticky}>
+          Add sticky
+        </Button>
       </Grid>
       <Grid item xs={12}>
         <Grid item container>
