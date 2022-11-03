@@ -3,34 +3,27 @@ import PropTypes from "prop-types";
 import { Box, Button, Grid, Paper, IconButton, TextField } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 
-const NotepadPage = ({
-    onDelete,
-    onSave,
-}) => {
+const NotepadPage = ({ onDelete, onSave }) => {
   return (
     <Box
       component={Paper}
       sx={{
-        height: "90vh",
+        height: "82vh",
         width: "100%",
-      }}
-    >
+      }}>
       <Grid container rowSpacing={1}>
         <Grid item xs={12} sx={{ pb: 4 }}>
-          <IconButton color='error' sx={{ float: "right" }} onClick={onDelete}>
+          <IconButton color="error" sx={{ float: "right" }} onClick={onDelete}>
             <DeleteIcon />
           </IconButton>
-          <Button
-            color='success'
-            onClick={onSave}
-          >
+          <Button color="success" onClick={onSave}>
             Save
           </Button>
         </Grid>
         <Grid item xs={12}>
           <TextField
             fullWidth
-            placeholder='Title'
+            placeholder="Title"
             sx={{
               ".MuiInputBase-input": {
                 py: 0,
@@ -42,7 +35,7 @@ const NotepadPage = ({
         <Grid item xs={12}>
           <TextField
             multiline
-            rows={20}
+            rows={17}
             fullWidth
             sx={{
               textAlign: "flex-start",
@@ -60,8 +53,8 @@ const NotepadPage = ({
 };
 
 NotepadPage.propTypes = {
-    onDelete: PropTypes.func.isRequired,
-    onSave: PropTypes.func.isRequired,
+  onDelete: PropTypes.func.isRequired,
+  onSave: PropTypes.func.isRequired,
 };
 
 export default NotepadPage;

@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Button, Grid } from "@mui/material";
+import { Button, Grid, Typography } from "@mui/material";
 import Sticky from "../../components/Sticky";
 import CanvasHeader from "./CanvasHeader.js";
+import NoDataCTA from "../../components/NoDataCTA";
 
 const StickiesCanvas = () => {
   const [stickies, setStickies] = useState([]);
@@ -68,35 +69,61 @@ const StickiesCanvas = () => {
       <Grid item xs={12}>
         <CanvasHeader />
       </Grid>
-      <Grid item xs={12} sx={{ textAlign: "center" }}>
-        <Button
-          variant="contained"
+      {stickies.length === 0 ? (
+        <Grid
+          item
+          xs={12}
           sx={{
-            backgroundColor: "orange",
-            "&:hover": { backgroundColor: "black" },
-          }}
-          onClick={handleAddSticky}>
-          Add sticky
-        </Button>
-      </Grid>
-      <Grid item xs={12}>
-        <Grid item container>
-          {stickies.map((sticky) => (
-            <Grid item xs={3} key={sticky.id}>
-              <Sticky
-                id={sticky.id}
-                content={sticky}
-                onDelete={handleDeleteSticky}
-                onSave={() =>
-                  handleSaveSticky(sticky.id, sticky.text, sticky.title)
-                }
-                onContentTitleChange={(e) => handleTitleChange(e, sticky.id)}
-                onContentBodyChange={(e) => handleBodyChange(e, sticky.id)}
-              />
-            </Grid>
-          ))}
+            display: "flex",
+            justifyContent: "center",
+            textAlign: "center",
+          }}>
+          <NoDataCTA>
+            <Typography variant="h5" sx={{ mb: 2 }}>
+              You don't have any stickies yet.
+            </Typography>
+            <Button
+              variant="contained"
+              sx={{
+                backgroundColor: "orange",
+                "&:hover": { backgroundColor: "black" },
+              }}
+              onClick={handleAddSticky}>
+              New sticky
+            </Button>
+          </NoDataCTA>
         </Grid>
-      </Grid>
+      ) : (
+        <Grid item xs={12}>
+          <Grid item container>
+            <Grid item xs={12} sx={{ textAlign: "center" }}>
+              <Button
+                variant="contained"
+                sx={{
+                  backgroundColor: "orange",
+                  "&:hover": { backgroundColor: "black" },
+                }}
+                onClick={handleAddSticky}>
+                Add sticky
+              </Button>
+            </Grid>
+            {stickies.map((sticky) => (
+              <Grid item xs={3} key={sticky.id}>
+                <Sticky
+                  id={sticky.id}
+                  content={sticky}
+                  onDelete={handleDeleteSticky}
+                  onSave={() =>
+                    handleSaveSticky(sticky.id, sticky.text, sticky.title)
+                  }
+                  onContentTitleChange={(e) => handleTitleChange(e, sticky.id)}
+                  onContentBodyChange={(e) => handleBodyChange(e, sticky.id)}
+                />
+              </Grid>
+            ))}
+          </Grid>
+        </Grid>
+      )}
     </Grid>
   );
 };
