@@ -12,7 +12,7 @@ ReactDOM.render(
     <Routes>
       <Route path="/" element={<HomePage />} />
       <Route path="/stickies" element={<StickiesCanvas />} />
-      <Route path="/notepad" element={<NotepadCanvas />} />
+      <Route path="/notepad/*" element={<NotepadCanvas />} />
       <Route path="/draw" element={<DrawingCanvas />} />
     </Routes>
   </BrowserRouter>,
