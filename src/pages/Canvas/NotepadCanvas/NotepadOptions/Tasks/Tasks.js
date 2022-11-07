@@ -5,7 +5,6 @@ import {
   List,
   ListItem,
   ListItemText,
-  Paper,
   TextField,
 } from "@mui/material";
 import UpdateMenu from "./UpdateMenu";
@@ -51,7 +50,6 @@ const Tasks = () => {
           {listOfReminders.map((reminder, index) => (
             <div key={`reminder-${index}`}>
               <ListItem
-                component={Paper}
                 secondaryAction={
                   <UpdateMenu
                     menuOptions={[

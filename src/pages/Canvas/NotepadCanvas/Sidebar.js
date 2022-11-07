@@ -13,14 +13,10 @@ const Sidebar = () => {
   const options = [
     {
       label: "Tasks",
-      value: "tasks",
-      description: "Forgetting something?",
       route: "tasks",
     },
     {
       label: "Journal",
-      value: "journal",
-      description: "What's on your mind?",
       route: "journal",
     },
   ];
@@ -28,21 +24,30 @@ const Sidebar = () => {
   return (
     <List disablePadding>
       {options.map((option) => (
-        <Box key={option.value}>
-          <NavLink
+        <Box key={option.label}>
+          <ListItem
+            disablePadding
+            component={NavLink}
             to={option.route}
             style={({ isActive }) =>
-              isActive ? { backgroundColor: "orange" } : undefined
+              isActive
+                ? {
+                    backgroundColor: "black",
+                    color: "white",
+                    textDecoration: "bold",
+                  }
+                : {
+                    color: "black",
+                    textDecoration: "none",
+                  }
             }>
-            <ListItem disablePadding>
-              <ListItemButton>
-                <ListItemText
-                  primary={option.label}
-                  secondary={option.description}
-                />
-              </ListItemButton>
-            </ListItem>
-          </NavLink>
+            <ListItemButton
+              sx={{
+                "&:hover": { color: "white", backgroundColor: "#F78A00" },
+              }}>
+              <ListItemText primary={option.label} />
+            </ListItemButton>
+          </ListItem>
           <Divider />
         </Box>
       ))}

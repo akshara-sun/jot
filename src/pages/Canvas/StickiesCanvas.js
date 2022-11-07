@@ -66,7 +66,7 @@ const StickiesCanvas = () => {
 
   return (
     <Grid container>
-      <Grid item xs={12}>
+      <Grid item xs={12} sx={{ mb: 2 }}>
         <CanvasHeader />
       </Grid>
       {stickies.length === 0 ? (

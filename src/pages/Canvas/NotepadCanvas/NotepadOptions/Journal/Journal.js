@@ -19,7 +19,7 @@ const Journal = () => {
           Time: {time}
         </Typography>
       </Grid>
-      <Grid item xs={12} sx={{ opacity: "40%" }}>
+      <Grid item xs={12}>
         <MoodTracker />
       </Grid>
       <Grid item xs={12}>
