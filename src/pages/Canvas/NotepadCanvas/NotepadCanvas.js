@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Grid, Paper, Typography } from "@mui/material";
+import { Box, Grid } from "@mui/material";
 import CanvasHeader from "../CanvasHeader";
 import Sidebar from "./Sidebar";
 import Journal from "./NotepadOptions/Journal/Journal";
@@ -13,20 +13,25 @@ const NotepadCanvas = () => {
         <CanvasHeader />
       </Grid>
       <Grid
-        component={Paper}
         item
         container
         sx={{
-          height: "calc(100vh - 64px)",
+          height: { sm: "calc(100vh - 64px)" },
         }}>
-        <Grid item xs={2} sx={{ backgroundColor: "#FEC252" }}>
+        <Grid
+          item
+          xs={12}
+          sm={2}
+          sx={{
+            mx: { xs: 2, sm: 0 },
+          }}>
           <Sidebar />
         </Grid>
         <Grid item xs={10}>
           <Box sx={{ p: 2 }}>
             <Routes>
-              <Route path="/journal" element={<Journal />} />
               <Route path="/tasks" element={<Tasks />} />
+              <Route path="/journal" element={<Journal />} />
             </Routes>
           </Box>
         </Grid>

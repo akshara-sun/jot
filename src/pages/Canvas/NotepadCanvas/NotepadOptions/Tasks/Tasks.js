@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
+  Button,
   Divider,
   Grid,
   List,
@@ -13,15 +14,25 @@ const Tasks = () => {
   const [reminder, setReminder] = useState("");
   const [listOfReminders, setListOfReminders] = useState([]);
 
+  useEffect(() => {
+    const reminders = localStorage.getItem("reminders");
+    if (reminders) {
+      setListOfReminders(JSON.parse(reminders));
+    }
+  }, []);
+
   const handleChange = (e) => {
     setReminder(e.target.value);
   };
 
-  const handleAddReminder = (e) => {
-    if (e.key === "Enter" && reminder !== "") {
-      setListOfReminders([...listOfReminders, reminder]);
-      setReminder("");
-    }
+  const handleAddAndSaveReminder = () => {
+    setListOfReminders([...listOfReminders, reminder]);
+    console.log([...listOfReminders, reminder]);
+    localStorage.setItem(
+      "reminders",
+      JSON.stringify([...listOfReminders, reminder])
+    );
+    setReminder("");
   };
 
   return (
@@ -41,9 +52,9 @@ const Tasks = () => {
           }}
           value={reminder}
           onChange={handleChange}
-          onKeyDown={handleAddReminder}
           placeholder="Enter a task/reminder..."
         />
+        <Button onClick={handleAddAndSaveReminder}>Add</Button>
       </Grid>
       <Grid item xs={12}>
         <List dense sx={{ maxHeight: "70vh", overflow: "auto" }}>

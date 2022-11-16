@@ -25,11 +25,8 @@ const LargeNavBar = ({ tabs, selectedTab, onChange }) => {
           onChange={onChange}
           sx={{
             "& .MuiTabs-indicator": {
-              display: "flex",
-              justifyContent: "center",
-              backgroundColor: "#FFA500",
-              mb: 1,
-              mx: 2,
+              backgroundColor: "#000000",
+              color: "white",
             },
             pl: 2,
           }}>
@@ -46,7 +43,8 @@ const LargeNavBar = ({ tabs, selectedTab, onChange }) => {
                 px: 2,
                 color: "black",
                 "&.Mui-selected": {
-                  color: "black",
+                  backgroundColor: "black",
+                  color: "white",
                 },
               }}
             />

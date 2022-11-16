@@ -17,7 +17,11 @@ const NoDataCTA = ({ children }) => {
 };
 
 NoDataCTA.propTypes = {
-  children: PropTypes.node.isRequired,
+  children: PropTypes.node,
+};
+
+NoDataCTA.defaultProps = {
+  children: null,
 };
 
 export default NoDataCTA;
