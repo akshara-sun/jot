@@ -1,12 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Box, Grid } from "@mui/material";
 import CanvasHeader from "../CanvasHeader";
 import Sidebar from "./Sidebar";
 import Journal from "./NotepadOptions/Journal/Journal";
 import Tasks from "./NotepadOptions/Tasks/Tasks";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 
 const NotepadCanvas = () => {
+  const { pathname } = useLocation();
+
+  // show tasks on page load
+  useEffect(() => {
+    if (pathname === "/notepad") {
+      window.location.href = "/notepad/tasks";
+    }
+  }, []);
+
   return (
     <Grid container>
       <Grid item xs={12}>

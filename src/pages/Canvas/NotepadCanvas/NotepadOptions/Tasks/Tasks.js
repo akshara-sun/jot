@@ -1,6 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { Button, Grid, List, ListItem, TextField, Input } from "@mui/material";
+import {
+  Button,
+  Grid,
+  List,
+  ListItem,
+  TextField,
+  Input,
+  IconButton,
+} from "@mui/material";
 import TaskActions from "./TaskActions";
+import AddTaskIcon from "@mui/icons-material/AddTask";
 
 const Tasks = () => {
   const [task, setTask] = useState("");
@@ -20,9 +29,12 @@ const Tasks = () => {
   };
 
   const handleAddAndSaveTask = (e) => {
+    if (task === "") {
+      alert("Cannot add empty task");
+      return;
+    }
     if (e.key === "Enter" || e.type === "click") {
       setListOfTasks([...listOfTasks, task]);
-      console.log([...listOfTasks, task]);
       localStorage.setItem("tasks", JSON.stringify([...listOfTasks, task]));
       setTask("");
     }
@@ -48,6 +60,28 @@ const Tasks = () => {
     }
   };
 
+  const handleIncreasePriority = (index) => {
+    if (index > 0) {
+      const updatedTasks = [...listOfTasks];
+      const temp = updatedTasks[index];
+      updatedTasks[index] = updatedTasks[index - 1];
+      updatedTasks[index - 1] = temp;
+      setListOfTasks(updatedTasks);
+      localStorage.setItem("tasks", JSON.stringify(updatedTasks));
+    }
+  };
+
+  const handleDecreasePriority = (index) => {
+    if (index < listOfTasks.length - 1) {
+      const updatedTasks = [...listOfTasks];
+      const temp = updatedTasks[index];
+      updatedTasks[index] = updatedTasks[index + 1];
+      updatedTasks[index + 1] = temp;
+      setListOfTasks(updatedTasks);
+      localStorage.setItem("tasks", JSON.stringify(updatedTasks));
+    }
+  };
+
   return (
     <Grid container>
       <Grid item xs={12} display="flex" justifyContent="center">
@@ -67,8 +101,23 @@ const Tasks = () => {
           onChange={handleChange}
           placeholder="Enter a reminder/task..."
           onKeyDown={handleAddAndSaveTask}
+          InputProps={{
+            endAdornment: (
+              <IconButton
+                onClick={handleAddAndSaveTask}
+                sx={{
+                  "&:hover": {
+                    color: "orange",
+                  },
+                }}>
+                <AddTaskIcon />
+              </IconButton>
+            ),
+          }}
         />
-        <Button onClick={handleAddAndSaveTask}>Add</Button>
+      </Grid>
+      <Grid item xs={12}>
+        {/* insert sorting and filtering component here */}
       </Grid>
       <Grid item xs={12}>
         <List dense sx={{ maxHeight: "70vh", overflow: "auto" }}>
@@ -87,8 +136,12 @@ const Tasks = () => {
                 }}
                 endAdornment={
                   <TaskActions
+                    list={listOfTasks}
+                    index={index}
                     disabled={isEditing}
                     completed={markAsDone}
+                    onIncreasePriority={() => handleIncreasePriority(index)}
+                    onDecreasePriority={() => handleDecreasePriority(index)}
                     onComplete={() => setMarkAsDone(!markAsDone)}
                     onDelete={() => handleDeleteTask(index)}
                   />
