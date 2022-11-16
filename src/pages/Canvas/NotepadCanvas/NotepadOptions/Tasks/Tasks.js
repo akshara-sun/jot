@@ -1,38 +1,51 @@
 import React, { useEffect, useState } from "react";
-import {
-  Button,
-  Divider,
-  Grid,
-  List,
-  ListItem,
-  ListItemText,
-  TextField,
-} from "@mui/material";
-import UpdateMenu from "./UpdateMenu";
+import { Button, Grid, List, ListItem, TextField, Input } from "@mui/material";
+import TaskActions from "./TaskActions";
 
 const Tasks = () => {
-  const [reminder, setReminder] = useState("");
-  const [listOfReminders, setListOfReminders] = useState([]);
+  const [task, setTask] = useState("");
+  const [listOfTasks, setListOfTasks] = useState([]);
+  const [isEditing, setIsEditing] = useState(false);
+  const [markAsDone, setMarkAsDone] = useState(false);
 
   useEffect(() => {
-    const reminders = localStorage.getItem("reminders");
-    if (reminders) {
-      setListOfReminders(JSON.parse(reminders));
+    const tasks = localStorage.getItem("tasks");
+    if (tasks) {
+      setListOfTasks(JSON.parse(tasks));
     }
   }, []);
 
   const handleChange = (e) => {
-    setReminder(e.target.value);
+    setTask(e.target.value);
   };
 
-  const handleAddAndSaveReminder = () => {
-    setListOfReminders([...listOfReminders, reminder]);
-    console.log([...listOfReminders, reminder]);
-    localStorage.setItem(
-      "reminders",
-      JSON.stringify([...listOfReminders, reminder])
-    );
-    setReminder("");
+  const handleAddAndSaveTask = (e) => {
+    if (e.key === "Enter" || e.type === "click") {
+      setListOfTasks([...listOfTasks, task]);
+      console.log([...listOfTasks, task]);
+      localStorage.setItem("tasks", JSON.stringify([...listOfTasks, task]));
+      setTask("");
+    }
+  };
+
+  const handleDeleteTask = (index) => {
+    const updatedTasks = [...listOfTasks];
+    updatedTasks.splice(index, 1);
+    setListOfTasks(updatedTasks);
+    localStorage.setItem("tasks", JSON.stringify(updatedTasks));
+  };
+
+  const handleUpdateTask = (e, index) => {
+    setIsEditing(true);
+    const updatedTasks = [...listOfTasks];
+    if (e.target.value !== "") {
+      updatedTasks[index] = e.target.value;
+      setListOfTasks(updatedTasks);
+      localStorage.setItem("tasks", JSON.stringify(updatedTasks));
+      setTask("");
+    } else {
+      handleDeleteTask(index);
+    }
   };
 
   return (
@@ -50,32 +63,37 @@ const Tasks = () => {
               },
             },
           }}
-          value={reminder}
+          value={task}
           onChange={handleChange}
-          placeholder="Enter a task/reminder..."
+          placeholder="Enter a reminder/task..."
+          onKeyDown={handleAddAndSaveTask}
         />
-        <Button onClick={handleAddAndSaveReminder}>Add</Button>
+        <Button onClick={handleAddAndSaveTask}>Add</Button>
       </Grid>
       <Grid item xs={12}>
         <List dense sx={{ maxHeight: "70vh", overflow: "auto" }}>
-          {listOfReminders.map((reminder, index) => (
-            <div key={`reminder-${index}`}>
+          {listOfTasks.map((task, index) => (
+            <div key={`task-${index}`}>
               <ListItem
-                secondaryAction={
-                  <UpdateMenu
-                    menuOptions={[
-                      { label: "Edit", onClick: () => console.log("edit") },
-                      { label: "Delete", onClick: () => console.log("delete") },
-                      {
-                        label: "Mark as done",
-                        onClick: () => console.log("marked as done"),
-                      },
-                    ]}
+                component={Input}
+                value={task}
+                onChange={(e) => handleUpdateTask(e, index)}
+                onFocus={() => setIsEditing(true)}
+                onBlur={() => setIsEditing(false)}
+                sx={{
+                  "& .MuiInputBase-input": {
+                    textDecoration: markAsDone ? "line-through" : "none",
+                  },
+                }}
+                endAdornment={
+                  <TaskActions
+                    disabled={isEditing}
+                    completed={markAsDone}
+                    onComplete={() => setMarkAsDone(!markAsDone)}
+                    onDelete={() => handleDeleteTask(index)}
                   />
-                }>
-                <ListItemText primary={reminder} />
-              </ListItem>
-              <Divider />
+                }
+              />
             </div>
           ))}
         </List>
