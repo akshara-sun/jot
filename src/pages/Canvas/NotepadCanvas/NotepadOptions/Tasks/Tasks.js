@@ -10,12 +10,15 @@ import {
 } from "@mui/material";
 import TaskActions from "./TaskActions";
 import AddTaskIcon from "@mui/icons-material/AddTask";
+import SortAndFilter from "../../../../../components/SortAndFilter";
+import SortIcon from "@mui/icons-material/Sort";
 
 const Tasks = () => {
   const [task, setTask] = useState("");
   const [listOfTasks, setListOfTasks] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
   const [markAsDone, setMarkAsDone] = useState(false);
+  const [sortBy, setSortBy] = useState("oldestToNewest");
 
   useEffect(() => {
     const tasks = localStorage.getItem("tasks");
@@ -24,15 +27,26 @@ const Tasks = () => {
     }
   }, []);
 
+  const SORT_OPTIONS = [
+    {
+      label: "Oldest to newest",
+      value: "oldestToNewest",
+    },
+    {
+      label: "Newest to oldest",
+      value: "lastCreated",
+    },
+    {
+      label: "A-Z",
+      value: "alphabetically",
+    },
+  ];
+
   const handleChange = (e) => {
     setTask(e.target.value);
   };
 
   const handleAddAndSaveTask = (e) => {
-    if (task === "") {
-      alert("Cannot add empty task");
-      return;
-    }
     if (e.key === "Enter" || e.type === "click") {
       setListOfTasks([...listOfTasks, task]);
       localStorage.setItem("tasks", JSON.stringify([...listOfTasks, task]));
@@ -117,7 +131,11 @@ const Tasks = () => {
         />
       </Grid>
       <Grid item xs={12}>
-        {/* insert sorting and filtering component here */}
+        <SortAndFilter
+          label="Sort by: "
+          icon={<SortIcon />}
+          options={SORT_OPTIONS}
+        />
       </Grid>
       <Grid item xs={12}>
         <List dense sx={{ maxHeight: "70vh", overflow: "auto" }}>

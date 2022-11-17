@@ -33,6 +33,7 @@ const NotepadCanvas = () => {
           sm={2}
           sx={{
             mx: { xs: 2, sm: 0 },
+            backgroundColor: { sm: "#FEC252" },
           }}>
           <Sidebar />
         </Grid>

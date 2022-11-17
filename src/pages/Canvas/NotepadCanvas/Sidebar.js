@@ -57,7 +57,6 @@ const Sidebar = () => {
               key={option.value}
               value={option.value}
               sx={{
-                textTransform: "uppercase",
                 fontSize: "0.8rem",
               }}>
               {option.label}
@@ -70,6 +69,7 @@ const Sidebar = () => {
           value={currentTab || "tasks"}
           onChange={(e, newValue) => setCurrentTab(newValue)}
           sx={{
+            color: "black",
             "& .MuiTabs-indicator": {
               backgroundColor: "#FFEBBB",
             },
@@ -82,10 +82,15 @@ const Sidebar = () => {
               component={NavLink}
               to={option.route}
               sx={{
-                px: 2,
                 color: "black",
+                textTransform: "none",
                 "&.Mui-selected": {
                   backgroundColor: "#FFEBBB",
+                  color: "black",
+                },
+                "&:hover": {
+                  backgroundColor: "#3E3838",
+                  color: "white",
                 },
               }}
             />
