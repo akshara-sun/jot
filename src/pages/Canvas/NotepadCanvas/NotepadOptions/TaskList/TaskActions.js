@@ -18,22 +18,32 @@ const TaskActions = ({
 }) => {
   return (
     <>
-      <ButtonGroup sx={{ display: "flex", justifyContent: "space-between" }}>
-        <IconButton
-          color={completed ? "info" : "success"}
-          onClick={onComplete}
-          disabled={disabled}>
+      <ButtonGroup>
+        <IconButton color={completed ? "info" : "success"} onClick={onComplete}>
+          {" "}
           {completed ? <UndoIcon /> : <CompleteTask />}
         </IconButton>
         <IconButton color="error" onClick={onDelete}>
           <DeleteIcon />
         </IconButton>
         <IconButton
-          disabled={index === list.length - 1}
+          sx={{
+            display: "none",
+            "&:hover": {
+              display: 0 <= index < list.length - 1 && "block",
+            },
+          }}
           onClick={onDecreasePriority}>
           <DecreasePriority />
         </IconButton>
-        <IconButton disabled={index === 0} onClick={onIncreasePriority}>
+        <IconButton
+          sx={{
+            display: "none",
+            "&:hover": {
+              display: 0 < index <= list.length - 1 && "block",
+            },
+          }}
+          onClick={onIncreasePriority}>
           <IncreasePriority />
         </IconButton>
       </ButtonGroup>

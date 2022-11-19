@@ -20,10 +20,12 @@ const SortAndFilter = ({ label, icon, options }) => {
         anchorOrigin={{
           vertical: "bottom",
           horizontal: "center",
-        }}
-        transition>
+        }}>
         {options.map((option) => (
-          <MenuItem key={option.value} selected={option.value}>
+          <MenuItem
+            key={option.value}
+            //selected={option.value}
+            onClick={option.onClick}>
             <ListItemText primary={option.label} />
           </MenuItem>
         ))}

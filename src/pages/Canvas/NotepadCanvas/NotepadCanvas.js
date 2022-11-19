@@ -3,7 +3,7 @@ import { Box, Grid } from "@mui/material";
 import CanvasHeader from "../CanvasHeader";
 import Sidebar from "./Sidebar";
 import Journal from "./NotepadOptions/Journal/Journal";
-import Tasks from "./NotepadOptions/Tasks/Tasks";
+import Tasks from "./NotepadOptions/TaskList/TaskList";
 import { Routes, Route, useLocation } from "react-router-dom";
 
 const NotepadCanvas = () => {
