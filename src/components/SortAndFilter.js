@@ -7,8 +7,9 @@ const SortAndFilter = ({ label, icon, options }) => {
   return (
     <>
       <Chip
+        clickable={true}
         label={label}
-        icon={icon}
+        avatar={icon}
         variant="outlined"
         onClick={(e) => setAnchorEl(e.target)}
       />
@@ -24,7 +25,7 @@ const SortAndFilter = ({ label, icon, options }) => {
         {options.map((option) => (
           <MenuItem
             key={option.value}
-            //selected={option.value}
+            value={option.value}
             onClick={option.onClick}>
             <ListItemText primary={option.label} />
           </MenuItem>
