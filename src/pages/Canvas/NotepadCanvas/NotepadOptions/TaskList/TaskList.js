@@ -1,23 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { Grid, List, TextField, IconButton } from "@mui/material";
+import { Grid, List, TextField, IconButton, Typography } from "@mui/material";
 import AddTaskIcon from "@mui/icons-material/AddTask";
 import SortAndFilter from "../../../../../components/SortAndFilter";
 import SortIcon from "@mui/icons-material/Sort";
 import Task from "./Task";
+import NoDataCTA from "../../../../../components/NoDataCTA";
 
 const TaskList = () => {
   const [newTask, setNewTask] = useState("");
   const [listOfTasks, setListOfTasks] = useState([]);
   const [sortBy, setSortBy] = useState("");
 
-  useEffect(() => {
-    const sortState = localStorage.getItem("sortState");
-    if (sortState) {
-      setSortBy(sortState);
-    }
-  }, []);
-
-  // save tasks on page reload
   useEffect(() => {
     const tasks = localStorage.getItem("tasks");
     if (tasks) {
@@ -78,85 +71,134 @@ const TaskList = () => {
 
   return (
     <Grid container>
-      <Grid item xs={12} display="flex" justifyContent="center">
-        <TextField
-          sx={{
-            width: 300,
-            "& .MuiInputBase-root": {
-              height: 40,
-            },
-            "& .MuiOutlinedInput-root": {
-              "&.Mui-focused fieldset": {
-                borderColor: "orange",
-              },
-            },
-          }}
-          value={newTask}
-          onChange={handleInputChange}
-          placeholder="Enter a reminder/task..."
-          onKeyDown={handleAddTask}
-          InputProps={{
-            endAdornment: (
-              <IconButton
-                onClick={handleAddTask}
-                sx={{
-                  "&:hover": {
-                    color: "orange",
+      <Grid
+        item
+        xs={12}
+        display="flex"
+        justifyContent="center"
+        textAlign="center">
+        {listOfTasks.length === 0 && (
+          <NoDataCTA>
+            <Typography variant="h6" sx={{ pb: 2 }}>
+              Add a task to get started.
+            </Typography>
+            <TextField
+              sx={{
+                width: 300,
+                "& .MuiInputBase-root": {
+                  height: 40,
+                },
+                "& .MuiOutlinedInput-root": {
+                  "&.Mui-focused fieldset": {
+                    borderColor: "orange",
                   },
-                }}>
-                <AddTaskIcon />
-              </IconButton>
-            ),
-          }}
-        />
+                },
+              }}
+              value={newTask}
+              onChange={handleInputChange}
+              placeholder="Enter a reminder/task..."
+              onKeyDown={handleAddTask}
+              InputProps={{
+                endAdornment: (
+                  <IconButton
+                    onClick={handleAddTask}
+                    sx={{
+                      "&:hover": {
+                        color: "orange",
+                      },
+                    }}>
+                    <AddTaskIcon />
+                  </IconButton>
+                ),
+              }}
+            />
+          </NoDataCTA>
+        )}
       </Grid>
       {listOfTasks.length > 0 && (
-        <Grid item xs={12}>
-          <SortAndFilter
-            label={`Sort: ${sortBy}`}
-            icon={<SortIcon />}
-            options={[
-              {
-                value: "oldToNew",
-                label: "Oldest to newest",
-                onClick: () => {
-                  setSortBy("Oldest to newest");
-                  const sortedTasks = listOfTasks.sort((a, b) => a.id - b.id);
-                  setListOfTasks(sortedTasks);
-                  localStorage.setItem("sortState", "Oldest to newest");
+        <>
+          <Grid item xs={12} display="flex" justifyContent="center">
+            <TextField
+              sx={{
+                width: 300,
+                "& .MuiInputBase-root": {
+                  height: 40,
                 },
-              },
-              {
-                value: "newToOld",
-                label: "Newest to oldest",
-                onClick: () => {
-                  setSortBy("Newest to oldest");
-                  const sortedTasks = listOfTasks.sort((a, b) => b.id - a.id);
-                  setListOfTasks(sortedTasks);
-                  localStorage.setItem("sortState", "Newest to oldest");
+                "& .MuiOutlinedInput-root": {
+                  "&.Mui-focused fieldset": {
+                    borderColor: "orange",
+                  },
                 },
-              },
-              {
-                value: "alphabetically",
-                label: "Alphabetically",
-                onClick: () => {
-                  setSortBy("Alphabetically");
-                  const sortedTasks = listOfTasks.sort((a, b) => {
-                    if (a.data < b.data) {
-                      return -1;
-                    }
-                    if (a.data > b.data) {
-                      return 1;
-                    }
-                    return 0;
-                  });
-                  setListOfTasks(sortedTasks);
-                  localStorage.setItem("sortState", "Alphabetically");
-                },
-              },
-            ]}
-          />
-        </Grid>
+              }}
+              value={newTask}
+              onChange={handleInputChange}
+              placeholder="Enter a reminder/task..."
+              onKeyDown={handleAddTask}
+              InputProps={{
+                endAdornment: (
+                  <IconButton
+                    onClick={handleAddTask}
+                    sx={{
+                      "&:hover": {
+                        color: "orange",
+                      },
+                    }}>
+                    <AddTaskIcon />
+                  </IconButton>
+                ),
+              }}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            {listOfTasks.length > 1 && (
+              <SortAndFilter
+                label={`Sort: ${sortBy}`}
+                icon={<SortIcon fontSize="small" />}
+                options={[
+                  {
+                    value: "oldToNew",
+                    label: "Oldest to newest",
+                    onClick: () => {
+                      setSortBy("Oldest to newest");
+                      const sortedTasks = listOfTasks.sort(
+                        (a, b) => a.id - b.id
+                      );
+                      setListOfTasks(sortedTasks);
+                    },
+                  },
+                  {
+                    value: "newToOld",
+                    label: "Newest to oldest",
+                    onClick: () => {
+                      setSortBy("Newest to oldest");
+                      const sortedTasks = listOfTasks.sort(
+                        (a, b) => b.id - a.id
+                      );
+                      setListOfTasks(sortedTasks);
+                    },
+                  },
+                  {
+                    value: "alphabetically",
+                    label: "Alphabetically",
+                    onClick: () => {
+                      setSortBy("Alphabetically");
+                      const sortedTasks = listOfTasks.sort((a, b) => {
+                        if (a.data < b.data) {
+                          return -1;
+                        }
+                        if (a.data > b.data) {
+                          return 1;
+                        }
+                        return 0;
+                      });
+                      setListOfTasks(sortedTasks);
+                    },
+                  },
+                ]}
+              />
+            )}
+          </Grid>
+        </>
       )}
       <Grid item xs={12}>
         <List dense sx={{ maxHeight: "70vh", overflow: "auto" }}>

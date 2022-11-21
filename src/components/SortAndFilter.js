@@ -9,9 +9,10 @@ const SortAndFilter = ({ label, icon, options }) => {
       <Chip
         clickable={true}
         label={label}
-        avatar={icon}
+        icon={icon}
         variant="outlined"
         onClick={(e) => setAnchorEl(e.target)}
+        sx={{ flexDirection: "row-reverse", pr: 2 }}
       />
       <Menu
         open={!!anchorEl}

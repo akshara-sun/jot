@@ -9,7 +9,6 @@ import { Routes, Route, useLocation } from "react-router-dom";
 const NotepadCanvas = () => {
   const { pathname } = useLocation();
 
-  // show tasks on page load
   useEffect(() => {
     if (pathname === "/notepad") {
       window.location.href = "/notepad/tasks";
