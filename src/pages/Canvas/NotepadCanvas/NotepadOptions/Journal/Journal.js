@@ -1,42 +1,35 @@
 import React, { useState } from "react";
-import { Grid, TextField, Typography } from "@mui/material";
-import MoodTracker from "../MoodTracker";
+import { Grid, Typography, Button } from "@mui/material";
+import JournalPage from "./JournalPage";
+import MoodTracker from "./MoodTracker";
 
 const Journal = () => {
-  const [value, setValue] = useState("");
   const today = new Date().toLocaleDateString();
   const time = new Date().toLocaleTimeString();
+
+  const handleSaveEntryAndMetadata = () => {};
 
   return (
     <Grid container>
       <Grid item xs={12}>
-        <Typography variant="overline" sx={{ opacity: "40%" }}>
-          Date: {today}
-        </Typography>
+        <Typography variant="overline">Date: {today}</Typography>
       </Grid>
       <Grid item xs={12}>
-        <Typography variant="overline" sx={{ opacity: "40%" }}>
-          Time: {time}
-        </Typography>
+        <Typography variant="overline">Time: {time}</Typography>
       </Grid>
-      <Grid item xs={12}>
+      <Grid item xs={10}>
         <MoodTracker />
       </Grid>
+      <Grid item xs={2}>
+        <Grid item container sx={{ justifyContent: "flex-end" }}>
+          <Button variant="text" color="error">
+            Clear
+          </Button>
+          <Button variant="text">Save</Button>
+        </Grid>
+      </Grid>
       <Grid item xs={12}>
-        <TextField
-          multiline
-          sx={{
-            "& .MuiOutlinedInput-root": {
-              "&.Mui-focused fieldset": {
-                borderColor: "orange",
-              },
-            },
-          }}
-          rows={24}
-          fullWidth
-          value={value}
-          onChange={(e) => setValue(e.target.value)}
-        />
+        <JournalPage />
       </Grid>
     </Grid>
   );

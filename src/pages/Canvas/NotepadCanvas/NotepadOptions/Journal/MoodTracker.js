@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Box, ButtonGroup, IconButton, Typography } from "@mui/material";
 import VeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDissatisfied";
 import DissatisfiedIcon from "@mui/icons-material/SentimentDissatisfied";
@@ -42,7 +42,6 @@ const MoodTracker = () => {
         display: "flex",
         alignContent: "center",
         alignItems: "center",
-        opacity: "40%",
       }}>
       <Typography variant="overline">Mood:</Typography>
       <ButtonGroup>
