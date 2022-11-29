@@ -3,6 +3,7 @@ import { Box, Grid } from "@mui/material";
 import CanvasHeader from "../CanvasHeader";
 import Sidebar from "./Sidebar";
 import Journal from "./NotepadOptions/Journal/Journal";
+import JournalEntry from "./NotepadOptions/Journal/JournalEntry/JournalEntry";
 import Tasks from "./NotepadOptions/TaskList/TaskList";
 import { Routes, Route, useLocation } from "react-router-dom";
 
@@ -41,6 +42,7 @@ const NotepadCanvas = () => {
             <Routes>
               <Route path="/tasks" element={<Tasks />} />
               <Route path="/journal" element={<Journal />} />
+              <Route path="/journal/new-entry" element={<JournalEntry />} />
             </Routes>
           </Box>
         </Grid>
