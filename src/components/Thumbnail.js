@@ -30,7 +30,8 @@ const Thumbnail = ({ name, color, image }) => {
 };
 
 Thumbnail.defaultProps = {
-  color: "white",
+  color: "",
   image: "none",
+  name: "",
 };
 export default Thumbnail;

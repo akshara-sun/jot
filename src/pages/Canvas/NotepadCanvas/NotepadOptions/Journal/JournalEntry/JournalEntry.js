@@ -11,6 +11,7 @@ import MoodTracker from "./MoodTracker";
 import { Link } from "react-router-dom";
 
 const Journal = () => {
+  const [mood, setMood] = useState(0);
   const [journalEntry, setJournalEntry] = useState("");
   const [savedJournalEntries, setSavedJournalEntries] = useState([]);
   const today = new Date().toLocaleDateString();
@@ -25,17 +26,21 @@ const Journal = () => {
       id: Math.floor(Math.random() * 100000000),
       date: today,
       time: time,
-      entry: journalEntry,
+      text: journalEntry,
+      mood: mood,
     };
     if (savedJournalEntries.length > 0) {
       setSavedJournalEntries([...savedJournalEntries, newEntry]);
     } else {
       setSavedJournalEntries([newEntry]);
     }
-
-    // update url with id of new entry so user can later navigate to it
     localStorage.setItem("journalEntries", JSON.stringify(savedJournalEntries));
     setJournalEntry("");
+  };
+
+  const handleClearJournalEntry = () => {
+    setJournalEntry("");
+    setMood(0);
   };
 
   return (
@@ -59,25 +64,20 @@ const Journal = () => {
         <Grid item xs={12}>
           <Typography variant="overline">Date: {today}</Typography>
         </Grid>
-        <Grid item xs={12}>
-          <Typography variant="overline">Time: {time}</Typography>
-        </Grid>
         <Grid item xs={10}>
-          <MoodTracker />
+          <MoodTracker selected={mood} onSelectMood={(id) => setMood(id)} />
         </Grid>
         {journalEntry !== "" && (
-          <Grid item xs={2}>
-            <Grid container item sx={{ justifyContent: "flex-end" }}>
-              <Button
-                variant="text"
-                color="error"
-                onClick={() => setJournalEntry("")}>
-                Clear
-              </Button>
-              <Button variant="text" onClick={handleSaveJournalEntry}>
-                Save
-              </Button>
-            </Grid>
+          <Grid container item sx={{ justifyContent: "flex-end" }}>
+            <Button
+              variant="text"
+              color="error"
+              onClick={handleClearJournalEntry}>
+              Clear
+            </Button>
+            <Button variant="text" onClick={handleSaveJournalEntry}>
+              Save
+            </Button>
           </Grid>
         )}
         <Grid item xs={12}>

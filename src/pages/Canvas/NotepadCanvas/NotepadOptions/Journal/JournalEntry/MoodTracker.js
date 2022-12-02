@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Box, ButtonGroup, IconButton, Typography } from "@mui/material";
 import VeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDissatisfied";
 import DissatisfiedIcon from "@mui/icons-material/SentimentDissatisfied";
@@ -6,9 +6,7 @@ import NeutralIcon from "@mui/icons-material/SentimentNeutral";
 import SatisfiedIcon from "@mui/icons-material/SentimentSatisfied";
 import VerySatisfiedIcon from "@mui/icons-material/SentimentSatisfiedAlt";
 
-const MoodTracker = () => {
-  const [selected, setSelected] = useState(0);
-
+const MoodTracker = ({ selected, onSelectMood }) => {
   const moods = [
     {
       id: 1,
@@ -48,7 +46,7 @@ const MoodTracker = () => {
         {moods.map((mood) => (
           <IconButton
             key={mood.id}
-            onClick={() => setSelected(mood.id)}
+            onClick={() => onSelectMood(mood.id)}
             sx={{
               backgroundColor:
                 selected === mood.id ? mood.color : "transparent",
