@@ -7,6 +7,7 @@ import {
   Link as LinkTo,
   TextField,
 } from "@mui/material";
+import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
 const JournalEntryViewer = ({ entry, journals }) => {
@@ -29,8 +30,6 @@ const JournalEntryViewer = ({ entry, journals }) => {
     localStorage.setItem("journalEntries", JSON.stringify(newJournals));
     setIsEditing(false);
   };
-
-  const title = entry.date + " " + entry.time;
 
   return (
     <Grid container>
@@ -72,7 +71,6 @@ const JournalEntryViewer = ({ entry, journals }) => {
               },
             },
           }}
-          disableUnderline={true}
           fullWidth
           multiline
           value={text}
@@ -81,6 +79,11 @@ const JournalEntryViewer = ({ entry, journals }) => {
       </Grid>
     </Grid>
   );
+};
+
+JournalEntryViewer.propTypes = {
+  entry: PropTypes.object.isRequired,
+  journals: PropTypes.array.isRequired,
 };
 
 export default JournalEntryViewer;

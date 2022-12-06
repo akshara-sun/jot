@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { Box, Paper, Typography } from "@mui/material";
 
 const Thumbnail = ({ name, color, image }) => {
@@ -27,6 +28,12 @@ const Thumbnail = ({ name, color, image }) => {
       </Typography>
     </Box>
   );
+};
+
+Thumbnail.propTypes = {
+  color: PropTypes.string,
+  image: PropTypes.string,
+  name: PropTypes.string,
 };
 
 Thumbnail.defaultProps = {

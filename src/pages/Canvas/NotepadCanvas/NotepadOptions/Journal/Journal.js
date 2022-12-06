@@ -8,8 +8,15 @@ import { NavLink, Link } from "react-router-dom";
 const Journal = ({ journals }) => {
   return (
     <Grid container>
-      {!journals ? (
-        <Grid item xs={12}>
+      {journals.length === 0 ? (
+        <Grid
+          item
+          xs={12}
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            textAlign: "center",
+          }}>
           <NoDataCTA>
             <Typography variant="h6" sx={{ pb: 2 }}>
               You don't have any journal entries yet. Click below to get
@@ -72,11 +79,7 @@ const Journal = ({ journals }) => {
 };
 
 Journal.propTypes = {
-  journals: PropTypes.array,
-};
-
-Journal.defaultProps = {
-  journals: [],
+  journals: PropTypes.array.isRequired,
 };
 
 export default Journal;

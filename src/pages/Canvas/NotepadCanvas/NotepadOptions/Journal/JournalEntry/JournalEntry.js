@@ -7,40 +7,18 @@ import {
   Breadcrumbs,
   Link as LinkTo,
 } from "@mui/material";
+import PropTypes from "prop-types";
 import MoodTracker from "./MoodTracker";
 import { Link } from "react-router-dom";
 
-const Journal = () => {
+const Journal = ({ onSave }) => {
   const [mood, setMood] = useState(0);
   const [journalEntry, setJournalEntry] = useState("");
-  const [savedJournalEntries, setSavedJournalEntries] = useState([]);
   const today = new Date().toLocaleDateString();
   const time = new Date().toLocaleTimeString();
 
   const handleChange = (e) => {
     setJournalEntry(e.target.value);
-  };
-
-  const handleSaveJournalEntry = () => {
-    const newEntry = {
-      id: Math.floor(Math.random() * 100000000),
-      date: today,
-      time: time,
-      text: journalEntry,
-      mood: mood,
-    };
-    if (savedJournalEntries.length > 0) {
-      setSavedJournalEntries([...savedJournalEntries, newEntry]);
-    } else {
-      setSavedJournalEntries([newEntry]);
-    }
-    localStorage.setItem("journalEntries", JSON.stringify(savedJournalEntries));
-    setJournalEntry("");
-  };
-
-  const handleClearJournalEntry = () => {
-    setJournalEntry("");
-    setMood(0);
   };
 
   return (
@@ -72,10 +50,15 @@ const Journal = () => {
             <Button
               variant="text"
               color="error"
-              onClick={handleClearJournalEntry}>
+              onClick={() => {
+                setJournalEntry("");
+                setMood(0);
+              }}>
               Clear
             </Button>
-            <Button variant="text" onClick={handleSaveJournalEntry}>
+            <Button
+              variant="text"
+              onClick={() => onSave(today, time, journalEntry, mood)}>
               Save
             </Button>
           </Grid>
@@ -100,6 +83,10 @@ const Journal = () => {
       </Grid>
     </Grid>
   );
+};
+
+Journal.propTypes = {
+  onSave: PropTypes.func.isRequired,
 };
 
 export default Journal;

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Box, Grid } from "@mui/material";
 import CanvasHeader from "../CanvasHeader";
 import Sidebar from "./Sidebar";
@@ -9,14 +9,29 @@ import Tasks from "./NotepadOptions/TaskList/TaskList";
 import { Routes, Route, useLocation } from "react-router-dom";
 
 const NotepadCanvas = () => {
+  const [savedJournalEntries, setSavedJournalEntries] = useState([]);
   const { pathname } = useLocation();
-  const journalEntries = JSON.parse(localStorage.getItem("journalEntries"));
 
   useEffect(() => {
     if (pathname === "/notepad") {
       window.location.href = "/notepad/tasks";
     }
   }, []);
+
+  const handleSaveJournalEntry = (date, time, text, mood) => {
+    const newJournalEntry = {
+      id: Math.floor(Math.random() * 100000000),
+      date: date,
+      time: time,
+      text: text,
+      mood: mood,
+    };
+    setSavedJournalEntries([...savedJournalEntries, newJournalEntry]);
+    localStorage.setItem(
+      "journalEntries",
+      JSON.stringify([...savedJournalEntries, newJournalEntry])
+    );
+  };
 
   return (
     <Grid container>
@@ -45,17 +60,20 @@ const NotepadCanvas = () => {
               <Route path="/tasks" element={<Tasks />} />
               <Route
                 path="/journal"
-                element={<Journal journals={journalEntries} />}
+                element={<Journal journals={savedJournalEntries} />}
               />
-              <Route path="/journal/new-entry" element={<JournalEntry />} />
-              {journalEntries.map((entry) => (
+              <Route
+                path="/journal/new-entry"
+                element={<JournalEntry onSave={handleSaveJournalEntry} />}
+              />
+              {savedJournalEntries.map((entry) => (
                 <Route
                   key={entry.id}
                   path={`/journal/${entry.id}`}
                   element={
                     <JournalEntryViewer
                       entry={entry}
-                      journals={journalEntries}
+                      journals={savedJournalEntries}
                     />
                   }
                 />
