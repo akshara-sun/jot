@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Grid, Tabs, Tab, Box } from "@mui/material";
 import { Link } from "react-router-dom";
-import JotIcon from "../../assets/images/jot-icon.png";
+import JotIcon from "../../assets/images/jot-icon-orange.png";
 
 const LargeNavBar = ({ tabs, selectedTab, onChange }) => {
   return (
@@ -25,11 +25,8 @@ const LargeNavBar = ({ tabs, selectedTab, onChange }) => {
           onChange={onChange}
           sx={{
             "& .MuiTabs-indicator": {
-              display: "flex",
-              justifyContent: "center",
-              backgroundColor: "#FFA500",
-              marginBottom: 1,
-              mx: 2,
+              backgroundColor: "#000000",
+              color: "white",
             },
             pl: 2,
           }}>
@@ -46,7 +43,8 @@ const LargeNavBar = ({ tabs, selectedTab, onChange }) => {
                 px: 2,
                 color: "black",
                 "&.Mui-selected": {
-                  color: "black",
+                  backgroundColor: "black",
+                  color: "white",
                 },
               }}
             />

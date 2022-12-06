@@ -45,7 +45,7 @@ const NotepadCanvas = () => {
         </Button>
       </Grid>
       <Grid item sx={{ flexGrow: 1, overflow: "auto" }}>
-        <Grid item container sx={{ mx: 40 }}>
+        <Grid container item sx={{ mx: 40 }}>
           {pages.map((page) => (
             <Grid item xs={7} key={page.id}>
               <NotepadPage

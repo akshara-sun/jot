@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { Box, Divider, Grid, Select, MenuItem } from "@mui/material";
-import JotIcon from "../../assets/images/jot-icon.png";
+import JotIcon from "../../assets/images/jot-icon-orange.png";
 
 const SmallNavBar = ({ tabs, selectedTab, onChange }) => {
   return (

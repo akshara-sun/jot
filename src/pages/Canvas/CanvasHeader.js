@@ -10,13 +10,13 @@ import SmallNavBar from "../../components/NavBar/SmallNavBar";
 const CanvasHeader = () => {
   const [currentTab, setCurrentTab] = useState(null);
   const [currentOption, setCurrentOption] = useState("");
-  const location = useLocation();
+  const { pathname } = useLocation();
   const theme = useTheme();
   const mobileView = useMediaQuery(theme.breakpoints.down("sm"));
 
   const currentTabFromLocation = useMemo(() => {
-    return CANVAS_DATA.find((tab) => tab.path === location.pathname);
-  }, [location.pathname]);
+    return CANVAS_DATA.find((tab) => pathname.includes(tab.path));
+  }, [pathname]);
 
   const handleTabChange = (event, newValue) => {
     setCurrentTab(newValue);
@@ -39,7 +39,7 @@ const CanvasHeader = () => {
   }
 
   return (
-    <Grid container sx={{ mb: 2 }}>
+    <Grid container sx={{ backgroundColor: "orange" }}>
       <Grid item xs={12}>
         {mobileView ? (
           <SmallNavBar
